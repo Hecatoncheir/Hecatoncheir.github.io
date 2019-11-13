@@ -1,0 +1,13 @@
+{
+  "title": "Reflection",
+  "date": "2015/08/12",
+  "id": "7",
+  "category": "Изучение Dart",
+  "icon": "dart_learning",
+  "next_post": "Guard_and_LiveReload",
+  "prev_post": "Installing_dart_in_c9",
+  "tags": [
+    "Dart",
+    "Reflection"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "title": "Асинхронное программирование",
+  "date": "2015/08/20",
+  "id": "9",
+  "category": "Изучение Dart",
+  "icon": "dart_learning",
+  "next_post": "Zones",
+  "prev_post": "Grinder_format",
+  "tags": [
+    "Dart",
+    "Async"
+  ]
+}

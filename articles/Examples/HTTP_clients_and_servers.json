@@ -1,0 +1,13 @@
+{
+  "title": "HTTP-клиент и сервер",
+  "date": "2014/09/7",
+  "id": "2",
+  "category": "Примеры кода Dart",
+  "icon": "dart_tutorial",
+  "next_post": "Sending_and_receiving_real-time_data_with_WebSockets",
+  "prev_post": "Using_HTTP_resources_with_HttpRequest",
+  "tags": [
+    "Dart",
+    "HTTP клиент"
+  ]
+}

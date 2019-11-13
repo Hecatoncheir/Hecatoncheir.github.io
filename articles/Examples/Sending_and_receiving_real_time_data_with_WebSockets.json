@@ -1,0 +1,13 @@
+{
+  "title": "Отправка и получение данных с помощью web-sockets",
+  "date": "2014/09/7",
+  "id": "3",
+  "category": "Примеры кода Dart",
+  "icon": "dart_tutorial",
+  "next_post": "Files_and_directories",
+  "prev_post": "HTTP_clients_and_servers",
+  "tags": [
+    "Dart",
+    "WebSocket"
+  ]
+}

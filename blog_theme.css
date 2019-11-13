@@ -1,0 +1,23 @@
+html.js,
+.js body {
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Resets */
+
+*,
+*:after,
+*:before {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Avenir Next', Avenir, 'Helvetica Neue', 'Lato', 'Segoe UI', Helvetica, Arial, sans-serif;
+    margin: 0;
+    color: #cecece;
+    /*background: #1d1e21;*/
+    background: #000;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

@@ -1,0 +1,13 @@
+{
+  "title": "Files & Directories",
+  "date": "2014/09/09",
+  "id": "4",
+  "category": "Примеры кода Dart",
+  "icon": "dart_tutorial",
+  "next_post": "The_Dart_Vm_execution_model",
+  "prev_post": "Sending_and_receiving_real_time_data_with_WebSockets",
+  "tags": [
+    "Dart",
+    "Files"
+  ]
+}

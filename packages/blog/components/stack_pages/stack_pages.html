@@ -1,0 +1,120 @@
+<dom-module id="stack-pages">
+    <template>
+        <style include="stack-pages-theme"></style>
+
+        <div class="js">
+
+            <!-- navigation -->
+            <nav class="pages-nav">
+
+                <!-- Страницы -->
+                <div class="pages-nav__item">
+                    <span class="link link--page"
+                       href="#page-home">Главная страница</span>
+                </div>
+                <div class="pages-nav__item">
+                    <span class="link link--page"
+                       href="#page-guidelines-for-action">Руководства к действию</span>
+                </div>
+
+                <div class="pages-nav__item">
+                    <span class="link link--page"
+                       href="#page-examples-Dart-code">Примеры кода Dart</span>
+                </div>
+
+                <div class="pages-nav__item">
+                    <span class="link link--page"
+                       href="#page-learning-Dart">Изучение Dart</span>
+                </div>
+
+                <div class="pages-nav__item">
+                    <span class="link link--page"
+                       href="#page-tag-Docker">Docker</span>
+                </div>
+
+                <div class="pages-nav__item">
+                    <span class="link link--page"
+                       href="#page-tag-HTTP">HTTP</span>
+                </div>
+
+                <!-- Ссылки -->
+                <div class="pages-nav__item pages-nav__item--small">
+                    <a class="link link--page link--faded"
+                       style="z-index: 9; position: relative;"
+                       target="_blank"
+                       href="http://rasarts.github.io">GitHub</a>
+                </div>
+
+                <div class="pages-nav__item pages-nav__item--small">
+                    <a class="link link--page link--faded"
+                       href="/#about">About</a>
+                </div>
+
+                <div class="pages-nav__item pages-nav__item--small">
+                    <a class="link link--page link--faded"
+                       style="z-index: 9; position: relative;"
+                       href="#code">Code</a>
+                </div>
+
+                <div class="pages-nav__item pages-nav__item--small">
+                    <a class="link link--page link--faded"
+                       target="_blank"
+                       href="https://www.behance.net/rasarts">Проекты в Behance</a>
+                </div>
+
+
+                <!-- Компонент с анимированными точками -->
+                <iron-media-query query="(max-width: 40em)"
+                                  query-matches="{{mobileWidth}}"></iron-media-query>
+
+                <template is="dom-if"
+                          if="{{!mobileWidth}}">
+                    <tree-dots></tree-dots>
+                </template>
+
+            </nav>
+            <!-- /navigation-->
+
+            <!-- pages stack -->
+            <div class="pages-stack">
+
+                <!-- page -->
+                <div class="page" id="page-home"></div>
+                <!-- /page -->
+
+                <!-- page -->
+                <div class="page" id="page-examples-Dart-code"></div>
+                <!-- /page -->
+
+                <!-- page -->
+                <div class="page" id="page-guidelines-for-action"></div>
+                <!-- /page -->
+
+                <!-- page -->
+                <div class="page" id="page-learning-Dart"></div>
+                <!-- /page -->
+
+                <!-- page -->
+                <div class="page" id="page-tag-Docker"></div>
+                <!-- /page -->
+
+                <!-- page -->
+                <div class="page" id="page-tag-HTTP"></div>
+                <!-- /page -->
+
+            </div>
+            <!-- /pages-stack -->
+
+            <button class="menu-button">
+                <span>Меню</span>
+            </button>
+        </div>
+
+        <!-- Компонент с подробным описанием статьи -->
+        <ink-transition></ink-transition>
+
+        <script src="javascript/classie.js"></script>
+        <script src="javascript/stack_pages.js"></script>
+
+    </template>
+</dom-module>

@@ -1,0 +1,14 @@
+{
+  "title": "Кластеризация Docker контейнеров с помощью Consul",
+  "date": "2016/05/29",
+  "id": "11",
+  "category": "Руководство к действию",
+  "icon": "tutorial",
+  "next_post": "Work_with_object_like_with_a_map",
+  "prev_post": "Zones",
+  "tags": [
+    "Docker",
+    "Consul",
+    "VirtualBox"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "title": "Таск Grinder для форматирования кода",
+  "date": "2015/08/19",
+  "id": "8",
+  "category": "Руководство к действию",
+  "icon": "tutorial",
+  "next_post": "Asynchronous_programming",
+  "prev_post": "Reflection",
+  "tags": [
+    "Dart",
+    "Grinder"
+  ]
+}

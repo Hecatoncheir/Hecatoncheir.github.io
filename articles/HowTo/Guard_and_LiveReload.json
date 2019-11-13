@@ -1,0 +1,14 @@
+{
+  "title": "Guard и LiveReload",
+  "date": "2015/08/18",
+  "id": "7",
+  "category": "Руководство к действию",
+  "icon": "tutorial",
+  "next_post": "Grinder_format",
+  "prev_post": "Reflection",
+  "tags": [
+    "Ruby",
+    "Guard",
+    "LiveReload"
+  ]
+}

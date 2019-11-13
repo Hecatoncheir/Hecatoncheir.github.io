@@ -1,0 +1,14 @@
+{
+  "title": "Работа с объектом как с Map",
+  "date": "2016/07/15",
+  "id": "12",
+  "category": "Руководство к действию",
+  "icon": "tutorial",
+  "next_post": "#",
+  "prev_post": "Clustering_docker_containers_via_consul_for_microservices_dart",
+  "tags": [
+    "Dart",
+    "Map",
+    "Entity"
+  ]
+}
