@@ -26,7 +26,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: application
-          path: build/web
+          path: .
 
   deploy:
     needs: [prepare]
@@ -44,11 +44,11 @@ jobs:
 
       - name: Commit files
         run: |
-          ls
-          pwd
-          cd application
-          ls
-          pwd
+          cd build/web
+
+          git init .
+          git remote add origin "https://${{ github.token }}@github.com/:user/:repo.git"
+
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git commit -am "Update"
@@ -56,7 +56,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          directory: "application"
+          directory: "build/web"
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: main
 
