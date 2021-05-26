@@ -46,6 +46,9 @@ jobs:
         run: |
           ls
           pwd
+          cd application
+          ls
+          pwd
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git commit -am "Update"
@@ -53,7 +56,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          directory: ""
+          directory: "application"
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: main
 
