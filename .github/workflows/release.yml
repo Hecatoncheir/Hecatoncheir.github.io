@@ -44,7 +44,6 @@ jobs:
 
       - name: Commit files
         run: |
-          cd build/web
           ls
           pwd
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -54,7 +53,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          directory: "build/web"
+          directory: ""
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: main
 
