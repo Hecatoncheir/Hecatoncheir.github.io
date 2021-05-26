@@ -1,0 +1,32 @@
+pages:
+  about:
+    titile:
+      en: "About"
+      ru: "О себе"
+    path: assets/pages/about.md
+
+categories:
+  -
+    name:
+      en: "Learning"
+      ru: "Изучение"
+  -
+    name:
+      en: "Example"
+      ru: "Примеры"
+
+tags:
+  - Dart
+  - Dart VM
+
+articles:
+  -
+    date: "2015/08/05"
+    category: "learning"
+    tags:
+      - Dart
+      - Dart VM
+    title:
+      en: "The Dart VM execution model"
+      ru: "Dart VM модель исполнения"
+    path: assets/articles/learning/the_dart_vm_execution_model.md
