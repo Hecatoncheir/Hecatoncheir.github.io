@@ -1,0 +1,106 @@
+name: release
+on: [push]
+
+jobs:
+  prepare:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+
+      - name: Create
+        run: flutter create .
+
+      - name: Get packages
+        run: flutter pub get
+
+      - name: Run tests
+        run: flutter test --coverage
+
+      - name: Build web
+        run: flutter build web --release
+
+      - name: Upload test artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: application
+          path: build/web
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Download artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: application
+
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -am "Update"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+
+#  coverage:
+#
+#    needs: [test]
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v1
+#
+#      - name: Download test artifact
+#        uses: actions/download-artifact@v1
+#        with:
+#          name: application
+#
+#      - name: Install lcov
+#        run: sudo apt install -y lcov
+#
+#      - name: Prepare coverage
+#        working-directory: application
+#        run: genhtml coverage/lcov.info -o coverage
+
+#  codemetrics:
+#
+#    needs: [test]
+#    runs-on: ubuntu-latest
+#
+#    container:
+#      image:  google/dart:latest
+#
+#    steps:
+#      - uses: actions/checkout@v1
+#
+#      - name: Download test artifact
+#        uses: actions/download-artifact@v1
+#        with:
+#          name: application
+#
+#      - name: Install codemetrics
+#        working-directory: application
+#        run: pub global activate --source git https://github.com/Hecatoncheir/codemetrics.git
+#
+#      - run: pub cache add async -v 2.3.0
+#      - run: pub cache add petitparser -v 2.4.0
+#
+#      - name: Run codemetrics
+#        working-directory: application
+#        run: dart-codemetrics --begin-warning-complexity-number=4 --begin-error-complexity-number=8
