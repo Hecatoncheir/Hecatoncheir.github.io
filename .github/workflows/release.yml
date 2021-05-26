@@ -45,70 +45,11 @@ jobs:
         with:
           name: application
 
-      - name: Commit files
-        run: |
-          ls
-          pwd
-
-          cd application
-
-          git init .
-          git remote add origin "https://${{ github.token }}@github.com/:user/:repo.git"
-
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git commit -am "Update"
-
       - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          directory: "application"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: main
+          FOLDER: application
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-#  coverage:
-#
-#    needs: [test]
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - uses: actions/checkout@v1
-#
-#      - name: Download test artifact
-#        uses: actions/download-artifact@v1
-#        with:
-#          name: application
-#
-#      - name: Install lcov
-#        run: sudo apt install -y lcov
-#
-#      - name: Prepare coverage
-#        working-directory: application
-#        run: genhtml coverage/lcov.info -o coverage
-
-#  codemetrics:
-#
-#    needs: [test]
-#    runs-on: ubuntu-latest
-#
-#    container:
-#      image:  google/dart:latest
-#
-#    steps:
-#      - uses: actions/checkout@v1
-#
-#      - name: Download test artifact
-#        uses: actions/download-artifact@v1
-#        with:
-#          name: application
-#
-#      - name: Install codemetrics
-#        working-directory: application
-#        run: pub global activate --source git https://github.com/Hecatoncheir/codemetrics.git
-#
-#      - run: pub cache add async -v 2.3.0
-#      - run: pub cache add petitparser -v 2.4.0
-#
-#      - name: Run codemetrics
-#        working-directory: application
-#        run: dart-codemetrics --begin-warning-complexity-number=4 --begin-error-complexity-number=8
