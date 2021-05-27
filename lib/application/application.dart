@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:rework_2021/configuration/configuration.dart';
@@ -29,6 +30,10 @@ class _ApplicationState extends State<Application> {
 
   @override
   Widget build(BuildContext context) {
-    return Text("Application");
+    return MaterialApp(
+      home: Scaffold(
+        body: Text('Application'),
+      ),
+    );
   }
 }

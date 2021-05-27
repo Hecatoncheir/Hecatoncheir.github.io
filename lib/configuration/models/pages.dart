@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'pages.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(anyMap: true, checked: false, explicitToJson: true)
 class Pages {
   Page about;
 
@@ -15,7 +15,7 @@ class Pages {
   Map<String, dynamic> toJson() => _$PagesToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(anyMap: true, checked: false, explicitToJson: true)
 class Page {
   PageTitle title;
   String path;
@@ -30,7 +30,7 @@ class Page {
   Map<String, dynamic> toJson() => _$PageToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(anyMap: true, checked: false, explicitToJson: true)
 class PageTitle {
   String en;
   String ru;

@@ -6,7 +6,7 @@ part of 'article_data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ArticleData _$ArticleDataFromJson(Map<String, dynamic> json) {
+ArticleData _$ArticleDataFromJson(Map json) {
   return ArticleData(
     path: json['path'] as String,
   );

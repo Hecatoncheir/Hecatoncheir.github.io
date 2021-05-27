@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'article_data.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(anyMap: true, checked: false, explicitToJson: true)
 class ArticleData {
   String path;
 

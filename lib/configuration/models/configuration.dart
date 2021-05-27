@@ -8,7 +8,7 @@ export 'pages.dart';
 
 part 'configuration.g.dart';
 
-@JsonSerializable(anyMap: true, explicitToJson: true)
+@JsonSerializable(anyMap: true, checked: false, explicitToJson: true)
 class ConfigurationModel {
   List<ArticleData> articles;
   Pages pages;

@@ -17,8 +17,8 @@ include: package:flutter_lints/flutter.yaml
 
 linter:
   rules:
-   avoid_print: true # Uncomment to disable the `avoid_print` rule
-   prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+   avoid_print: true
+   prefer_single_quotes: true
    always_declare_return_types: true
    always_put_control_body_on_new_line: false
    always_put_required_named_parameters_first: true
