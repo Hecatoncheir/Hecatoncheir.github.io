@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart' show rootBundle;
+
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:rework_2021/configuration/configuration.dart';
 
@@ -32,8 +34,59 @@ class _ApplicationState extends State<Application> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Text('Application'),
+        body: buildLayout(),
       ),
     );
   }
+
+  Widget buildLayout() {
+    return FutureBuilder<String>(
+        future: () async {
+          const path = 'assets/pages/about.md';
+
+          final markdownText = await loadAsset(
+            context: context,
+            path: path,
+          );
+
+          return markdownText;
+        }(),
+        initialData: '',
+        builder: (context, snapshot) {
+          final markdown = snapshot.data;
+
+          return Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: MarkdownBody(
+                          selectable: true,
+                          data: markdown!,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
+  Future<String> loadAsset({
+    required BuildContext context,
+    required String path,
+  }) async {
+    return await rootBundle.loadString(path);
+  }
+
+  // Future<String> _loadAsset({
+  //   required BuildContext context,
+  //   required String path,
+  // }) async {
+  //   return await DefaultAssetBundle.of(context).loadString(path);
+  // }
 }
