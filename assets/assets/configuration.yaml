@@ -1,3 +1,7 @@
+gitHub:
+  clientId: "c2574b6003fe1f96228c"
+  clientSecret: "eb6a1a0a05ad8d56d19ea69e4afe592f8a17fab5"
+
 pages:
   about:
     title:
