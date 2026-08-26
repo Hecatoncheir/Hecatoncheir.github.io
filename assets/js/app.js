@@ -422,6 +422,139 @@ function initWave() {
   raf = requestAnimationFrame(draw);
 }
 
+/**
+ * Particle field rippling on a wave, standing in for the old divider image.
+ * Same neon sweep as the hero, but built from dots, swinging wider, and
+ * gathering toward the pointer.
+ */
+function initParticleWave() {
+  const cv = $('#divider');
+  if (!cv) return;
+  const ctx = cv.getContext('2d', { alpha: true });
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const ROWS = 26;         // each row is its own spline through the field
+  const GAP = 6;           // horizontal spacing between particles, in px
+  const REACH = 165;       // how far the pointer's influence carries
+  const PULL = 52;         // furthest a particle is drawn toward the pointer
+  const TAU = Math.PI * 2;
+
+  let w = 0, h = 0, dpr = 1, gap = GAP, cols = 0, grad = null;
+  let raf = 0, running = false;
+  /* parked far off-canvas until the pointer actually arrives */
+  const ptr = { x: -1e4, y: -1e4, on: false };
+
+  function size() {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    w = cv.clientWidth;
+    h = cv.clientHeight;
+    if (!w || !h) return;
+    cv.width = Math.round(w * dpr);
+    cv.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    gap = w > 900 ? GAP : GAP * 0.8;
+    cols = Math.ceil(w / gap) + 1;
+
+    grad = ctx.createLinearGradient(0, 0, w, 0);
+    grad.addColorStop(0.00, '#00e9f0');
+    grad.addColorStop(0.34, '#4d7cff');
+    grad.addColorStop(0.68, '#a855f7');
+    grad.addColorStop(1.00, '#ff2e93');
+  }
+
+  function draw(now) {
+    if (!w || !h) { if (running) raf = requestAnimationFrame(draw); return; }
+
+    const t = now * 0.0007;
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = grad;
+
+    /* A tight band of rows swinging wide reads better than a wide band
+       swinging narrow, and it keeps the crests inside the canvas:
+       half-spread (0.07h) + peak wave (0.28h * 1.26) leaves ~7% of the
+       height clear top and bottom, so only a pointer shove reaches the edge. */
+    const midY = h * 0.5;
+    const spread = h * 0.14;
+    const amp = h * 0.28;
+
+    for (let r = 0; r < ROWS; r++) {
+      const k = r / (ROWS - 1);
+      const rowY = midY - spread / 2 + spread * k;
+      const depth = Math.sin(Math.PI * k);   // rows nearest the middle read strongest
+      const baseRad = 0.5 + depth * 0.62;
+
+      /* 26 overlapping rows would read as a solid mass at the old alpha */
+      ctx.globalAlpha = 0.15 + 0.45 * depth;
+      /* one path per row, filled once — 26 fills a frame instead of ~6000 */
+      ctx.beginPath();
+
+      for (let c = 0; c < cols; c++) {
+        const bx = c * gap;
+        const nx = bx / w;
+
+        /* Low spatial frequencies: roughly half a period of the primary
+           across the width, so the field reads as a few long swells rather
+           than a ripple. The per-row phase offsets are what separate the
+           splines from each other. */
+        let x = bx;
+        let y = rowY
+          + Math.sin(nx * 3.4 + t * 0.62 + k * 2.6) * amp
+          + Math.sin(nx * 6.8 - t * 0.44 + k * 3.4) * amp * 0.26;
+        let rad = baseRad;
+
+        if (ptr.on) {
+          const dx = ptr.x - x;          // toward the pointer, not away
+          const dy = ptr.y - y;
+          const d2 = dx * dx + dy * dy;
+          if (d2 < REACH * REACH) {
+            const d = Math.sqrt(d2) || 0.0001;
+            const f = 1 - d / REACH;
+            /* Capped short of the pointer itself: an uncapped pull makes the
+               nearest particles overshoot and stream out the far side, which
+               reads as a glitch rather than as gathering. */
+            const pull = Math.min(PULL * f * f, d * 0.82);
+            x += (dx / d) * pull;
+            y += (dy / d) * pull;
+            rad += f * 1.6;
+          }
+        }
+
+        ctx.moveTo(x + rad, y);
+        ctx.arc(x, y, rad, 0, TAU);
+      }
+      ctx.fill();
+    }
+
+    ctx.globalAlpha = 1;
+    if (running) raf = requestAnimationFrame(draw);
+  }
+
+  size();
+  addEventListener('resize', () => { size(); if (reduce) draw(0); }, { passive: true });
+
+  addEventListener('pointermove', (e) => {
+    const r = cv.getBoundingClientRect();
+    ptr.x = e.clientX - r.left;
+    ptr.y = e.clientY - r.top;
+    /* only worth testing against when the pointer is anywhere near the strip */
+    ptr.on = ptr.y > -REACH && ptr.y < h + REACH;
+  }, { passive: true });
+
+  if (reduce) { draw(0); return; }
+
+  new IntersectionObserver(([e]) => {
+    if (e.isIntersecting && !running) {
+      running = true;
+      if (!w) size();
+      raf = requestAnimationFrame(draw);
+    } else if (!e.isIntersecting && running) {
+      running = false;
+      cancelAnimationFrame(raf);
+    }
+  }, { threshold: 0 }).observe(cv);
+}
+
 /** Soft light that trails the pointer. */
 function initCursor() {
   const el = $('.cursor-glow');
@@ -638,6 +771,7 @@ function renderAll() {
 renderMarquee();
 renderAll();
 initWave();
+initParticleWave();
 initCursor();
 initMagnetic();
 initNav();

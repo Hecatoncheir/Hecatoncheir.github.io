@@ -1431,11 +1431,14 @@ section { position: relative; }
 .footer-inner a { color: var(--ink-2); }
 .footer-inner a:hover { color: var(--ink); }
 
+/* particle field between the last section and the footer — tall enough for
+   the amplitude to actually swing */
 .divider-wave {
-  width: 100%;
-  height: auto;
   display: block;
-  opacity: 0.9;
+  width: 100%;
+  height: clamp(220px, 26vw, 380px);
+  border-top: 1px solid var(--line);
+  touch-action: pan-y;
 }
 
 /* ------------------------------------------------------------ cursor ---- */
