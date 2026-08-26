@@ -1,7 +1,7 @@
 /* ==========================================================================
    Vitaliy Vostrikov — personal site
-   Design language taken from the profile card: heavy condensed caps,
-   monospace body, black and white, one neon wave doing all the colour work.
+   Nunito for display, Nunito Sans for prose, Anonymous Pro for anything
+   technical. Black and white, with one neon wave doing all the colour work.
    ========================================================================== */
 
 /* --------------------------------------------------- reset + tokens ----- */
@@ -41,10 +41,11 @@
   --grain: 0.035;
   --wave-alpha: 0.85;
 
-  /* type */
-  --display: 'Oswald', 'Haettenschweiler', 'Arial Narrow Bold', sans-serif;
-  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* type — Nunito for display, Nunito Sans for prose, Anonymous Pro for
+     anything technical. All three carry Cyrillic, so RU and EN set alike. */
+  --display: 'Nunito', 'Avenir Next', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'Anonymous Pro', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --sans: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   /* rhythm */
   --gutter: clamp(1.25rem, 5vw, 5rem);
@@ -224,10 +225,10 @@ section { position: relative; }
 
 .section-title {
   font-family: var(--display);
-  font-weight: 700;
-  font-size: clamp(2.4rem, 8vw, 5.5rem);
-  line-height: 0.92;
-  letter-spacing: -0.015em;
+  font-weight: 800;
+  font-size: clamp(2rem, 6.4vw, 4.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
   text-transform: uppercase;
 }
 
@@ -281,9 +282,9 @@ section { position: relative; }
   align-items: center;
   gap: 0.6rem;
   font-family: var(--display);
-  font-weight: 700;
-  font-size: 1.05rem;
-  letter-spacing: 0.02em;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -351,6 +352,14 @@ section { position: relative; }
   .chip.menu-btn { display: inline-flex; }
 }
 
+/* On a phone the bar carries the mark, the language pair, the theme and the
+   menu — the wordmark and the GitHub shortcut both drop, the latter because
+   the menu it opens already lists GitHub, Behance and email. */
+@media (max-width: 560px) {
+  .brand-name { display: none; }
+  .nav-tools > a.chip { display: none; }
+}
+
 /* ------------------------------------------------------ mobile menu ---- */
 
 .menu {
@@ -386,10 +395,10 @@ section { position: relative; }
 .menu-links a {
   font-family: var(--display);
   font-weight: 700;
-  font-size: clamp(2.2rem, 12vw, 3.6rem);
-  line-height: 1.06;
+  font-size: clamp(1.8rem, 9.5vw, 3rem);
+  line-height: 1.14;
   text-transform: uppercase;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.03em;
   color: var(--ink);
   opacity: 0;
   transform: translateY(18px);
@@ -506,14 +515,15 @@ section { position: relative; }
 
 .hero-name {
   font-family: var(--display);
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
-  /* 0.86 is as tight as Cyrillic goes before Й and Ё start hitting the line
-     above; the padding gives those diacritics their own air */
-  line-height: 0.86;
-  letter-spacing: -0.02em;
-  font-size: clamp(3.2rem, 13.5vw, 12rem);
-  padding-top: 0.1em;
+  /* Nunito is a normal-width face, so the same line needs a smaller size than
+     a condensed one did; 0.92 clears the Cyrillic Й breve, and the padding
+     gives it air against the badge above */
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  font-size: clamp(2.5rem, 11vw, 9.5rem);
+  padding-top: 0.08em;
 }
 .hero-name .l1,
 .hero-name .l2 { display: block; }
@@ -540,8 +550,8 @@ section { position: relative; }
   font-family: var(--display);
   font-weight: 500;
   text-transform: uppercase;
-  font-size: clamp(1rem, 2.8vw, 2rem);
-  letter-spacing: 0.02em;
+  font-size: clamp(0.95rem, 2.3vw, 1.7rem);
+  letter-spacing: -0.01em;
   color: var(--ink-2);
 }
 .hero-role .slash { color: var(--neon-4); }
@@ -625,9 +635,9 @@ section { position: relative; }
 .stat-value {
   font-family: var(--display);
   font-weight: 700;
-  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-size: clamp(1.5rem, 3.5vw, 2.3rem);
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 .stat-label {
   margin-top: 0.4rem;
@@ -808,9 +818,9 @@ section { position: relative; }
 .brands span {
   font-family: var(--display);
   font-weight: 700;
-  font-size: clamp(1rem, 2.4vw, 1.7rem);
+  font-size: clamp(0.9rem, 1.9vw, 1.35rem);
   text-transform: uppercase;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.015em;
   color: var(--ink-3);
   transition: color 0.3s var(--ease);
   cursor: default;
@@ -883,10 +893,10 @@ section { position: relative; }
 .job-title {
   font-family: var(--display);
   font-weight: 700;
-  font-size: clamp(1.5rem, 3.6vw, 2.5rem);
-  line-height: 1.02;
+  font-size: clamp(1.25rem, 2.9vw, 2rem);
+  line-height: 1.1;
   text-transform: uppercase;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.025em;
 }
 .job-role {
   margin-top: 0.5rem;
@@ -940,10 +950,10 @@ section { position: relative; }
 .proj h4 {
   font-family: var(--display);
   font-weight: 500;
-  font-size: 1.15rem;
+  font-size: 1.02rem;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
-  line-height: 1.15;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
 }
 .proj p {
   margin-top: 0.7rem;
@@ -1283,10 +1293,10 @@ section { position: relative; }
   margin-top: 0.28rem;
   font-family: var(--display);
   font-weight: 500;
-  font-size: clamp(0.98rem, 1.7vw, 1.35rem);
+  font-size: clamp(0.92rem, 1.5vw, 1.2rem);
   text-transform: uppercase;
-  line-height: 1.1;
-  letter-spacing: 0.01em;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 .work-stats {
   display: flex;
@@ -1338,9 +1348,9 @@ section { position: relative; }
 .marquee-track span {
   font-family: var(--display);
   font-weight: 700;
-  font-size: clamp(1.4rem, 3.6vw, 2.6rem);
+  font-size: clamp(1.15rem, 2.9vw, 2.1rem);
   text-transform: uppercase;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.02em;
   color: var(--ink-3);
   white-space: nowrap;
   transition: color 0.3s var(--ease);
@@ -1358,9 +1368,9 @@ section { position: relative; }
   text-transform: uppercase;
   /* sized so the whole address holds one line on a desktop and breaks at
      sensible points rather than mid-word on a phone */
-  font-size: clamp(1.15rem, 3.7vw, 3.1rem);
-  line-height: 1.12;
-  letter-spacing: -0.01em;
+  font-size: clamp(0.95rem, 2.9vw, 2.4rem);
+  line-height: 1.18;
+  letter-spacing: -0.03em;
   overflow-wrap: anywhere;
   background: var(--neon-loop);
   background-size: 200% 100%;
