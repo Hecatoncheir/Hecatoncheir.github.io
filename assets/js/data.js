@@ -23,7 +23,7 @@ export const PROFILE = {
   links: {
     github: 'https://github.com/Hecatoncheir',
     behance: 'https://www.behance.net/Hecatoncheir',
-    habr: 'https://career.habr.com/vostrikov-vitaliy2',
+    hh: 'https://hh.ru/resume/b3f6fa32ff07d426220039ed1f387946515558',
     codersrank: 'https://profile.codersrank.io/user/rasarts',
   },
 };

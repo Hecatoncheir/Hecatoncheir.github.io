@@ -18,7 +18,7 @@ const EXTRA = {
     ctaDesign: { en: 'Behance', ru: 'Behance' },
   },
   contact: {
-    cv: { en: 'Résumé on Habr Career', ru: 'Резюме на Хабр Карьере' },
+    cv: { en: 'Résumé on hh.ru', ru: 'Резюме на hh.ru' },
   },
 };
 
@@ -52,7 +52,6 @@ const ICON = {
   bolt: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg>',
   github: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.8 2.7 1.3 3.4 1 .1-.7.4-1.3.7-1.5-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.3 11.3 0 0 1 6 0C17.5 5 18.5 5.3 18.5 5.3c.7 1.6.2 2.8.1 3.1.8.9 1.2 1.9 1.2 3.2 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>',
   behance: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.5 5.5c1.6 0 2.8.4 3.6 1.1.8.7 1.2 1.7 1.2 3 0 1.4-.6 2.4-1.9 3.1 1.7.5 2.6 1.8 2.6 3.8 0 1.5-.5 2.7-1.5 3.5-1 .8-2.4 1.2-4.2 1.2H0V5.5h7.5Zm-.4 5.9c1.3 0 1.9-.5 1.9-1.6S8.4 8.2 7.1 8.2H3.3v3.2h3.8Zm.2 6c1.5 0 2.2-.6 2.2-1.8s-.7-1.8-2.2-1.8H3.3v3.6h4ZM19 18.4c1 0 1.8-.5 2.1-1.4h2.6c-.7 2.4-2.6 3.7-4.8 3.7-3.2 0-5.4-2.2-5.4-5.5s2.2-5.6 5.3-5.6c3.3 0 5.2 2.6 5 6.1h-7.5c.2 1.7 1.1 2.7 2.7 2.7Zm2.1-4.4c-.2-1.5-1-2.2-2.3-2.2-1.4 0-2.3.8-2.5 2.2h4.8ZM15.6 6.4h6v1.7h-6V6.4Z"/></svg>',
-  habr: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5v14M20 5v14M4 12h16M8 8v8M16 8v8"/></svg>',
   rank: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
   mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>',
 };
@@ -231,7 +230,6 @@ function renderSocials() {
   const rows = [
     { icon: ICON.github, name: 'GitHub', sub: PROFILE.handle, url: PROFILE.links.github },
     { icon: ICON.behance, name: 'Behance', sub: PROFILE.handle, url: PROFILE.links.behance },
-    { icon: ICON.habr, name: 'Habr Career', sub: lang === 'ru' ? 'Резюме' : 'Résumé', url: PROFILE.links.habr },
     { icon: ICON.rank, name: 'CodersRank', sub: '@rasarts', url: PROFILE.links.codersrank },
     { icon: ICON.mail, name: 'Email', sub: lang === 'ru' ? 'Предпочтительно' : 'Preferred', url: `mailto:${PROFILE.email}` },
   ];

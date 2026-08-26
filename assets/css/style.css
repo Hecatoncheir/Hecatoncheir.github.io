@@ -19,11 +19,13 @@
   --neon-3: #a855f7;
   --neon-4: #ff2e93;
   --neon-grad: linear-gradient(90deg, var(--neon-1), var(--neon-2), var(--neon-3), var(--neon-4));
-  /* the sequence twice over, so a 200% background can slide one full cycle
-     and land exactly where it started */
-  --neon-loop: linear-gradient(90deg,
+  /* Mirrored, for text clipped to a 200% background. The left half is one
+     clean cyan→magenta sweep and the right half is its reverse, so a slide
+     between the two ends never crosses a magenta→cyan seam — which is what
+     put a washed-out grey on the last couple of glyphs before. */
+  --neon-mirror: linear-gradient(90deg,
     var(--neon-1), var(--neon-2), var(--neon-3), var(--neon-4),
-    var(--neon-1), var(--neon-2), var(--neon-3), var(--neon-4));
+    var(--neon-3), var(--neon-2), var(--neon-1));
 
   /* light theme is the default definition */
   --bg: #f4f4f2;
@@ -529,12 +531,13 @@ section { position: relative; }
 .hero-name .l2 { display: block; }
 
 .hero-name .l2 {
-  background: var(--neon-loop);
+  background: var(--neon-mirror);
   background-size: 200% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: slide-grad 11s linear infinite;
+  /* alternate, so it eases back the way it came instead of snapping */
+  animation: slide-grad 14s ease-in-out infinite alternate;
 }
 @keyframes slide-grad {
   from { background-position: 0% 0; }
@@ -1359,7 +1362,15 @@ section { position: relative; }
 
 /* ---------------------------------------------------------- contact ----- */
 
-.contact { position: relative; overflow: hidden; }
+.contact {
+  position: relative;
+  overflow: hidden;
+  /* clear space under the socials for the particle field to occupy, so it
+     reads as the section's floor rather than as texture behind the content */
+  padding-bottom: calc(clamp(220px, 26vw, 380px) + clamp(1.5rem, 4vw, 4rem));
+}
+/* everything except the canvas stacks above it */
+.contact > *:not(.divider-wave) { position: relative; z-index: 1; }
 
 .contact-mail {
   display: inline-block;
@@ -1368,17 +1379,18 @@ section { position: relative; }
   text-transform: uppercase;
   /* sized so the whole address holds one line on a desktop and breaks at
      sensible points rather than mid-word on a phone */
-  font-size: clamp(0.95rem, 2.9vw, 2.4rem);
+  font-size: clamp(0.78rem, 2.9vw, 2.4rem);
   line-height: 1.18;
   letter-spacing: -0.03em;
   overflow-wrap: anywhere;
-  background: var(--neon-loop);
+  background: var(--neon-mirror);
   background-size: 200% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   transition: background-position 0.9s var(--ease);
 }
+/* hover runs the spectrum the other way */
 .contact-mail:hover { background-position: 100% 0; }
 
 .contact-actions {
@@ -1388,9 +1400,11 @@ section { position: relative; }
   margin-top: clamp(1.6rem, 4vw, 2.6rem);
 }
 
+/* Four fixed columns rather than auto-fit: with exactly four links, auto-fit
+   lands on three at mid widths and leaves a dead cell on the second row. */
 .socials {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1px;
   margin-top: clamp(2.5rem, 6vw, 4rem);
   background: var(--line);
@@ -1409,6 +1423,10 @@ section { position: relative; }
 .social:hover { background: var(--bg-3); }
 .social svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--ink-3); transition: color 0.3s var(--ease); }
 .social:hover svg { color: var(--neon-2); }
+
+@media (min-width: 720px) {
+  .socials { grid-template-columns: repeat(4, 1fr); }
+}
 .social b { display: block; font-family: var(--mono); font-size: 0.8rem; font-weight: 700; }
 .social small { display: block; font-family: var(--mono); font-size: 0.68rem; color: var(--ink-3); }
 
@@ -1431,14 +1449,18 @@ section { position: relative; }
 .footer-inner a { color: var(--ink-2); }
 .footer-inner a:hover { color: var(--ink); }
 
-/* particle field between the last section and the footer — tall enough for
-   the amplitude to actually swing */
+/* particle field sitting behind the bottom of the contact section — tall
+   enough for the amplitude to actually swing */
 .divider-wave {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 0;
   display: block;
   width: 100%;
   height: clamp(220px, 26vw, 380px);
-  border-top: 1px solid var(--line);
-  touch-action: pan-y;
+  /* the pointer is tracked on window, so the canvas never needs to receive
+     events itself — and this keeps it clear of the links stacked above it */
+  pointer-events: none;
 }
 
 /* ------------------------------------------------------------ cursor ---- */
