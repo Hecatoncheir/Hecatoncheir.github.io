@@ -435,9 +435,13 @@ function initParticleWave() {
   const GAP = 6;           // horizontal spacing between particles, in px
   const REACH = 165;       // how far the pointer's influence carries
   const PULL = 52;         // furthest a particle is drawn toward the pointer
+  const CHAOS = 9;         // px of scatter added on top, right at the pointer
   const TAU = Math.PI * 2;
 
   let w = 0, h = 0, dpr = 1, gap = GAP, cols = 0, grad = null;
+  /* one fixed random phase per particle, so the scatter is different for
+     each of them but stable frame to frame instead of pure flicker */
+  let phase = null;
   let raf = 0, running = false;
   /* parked far off-canvas until the pointer actually arrives */
   const ptr = { x: -1e4, y: -1e4, on: false };
@@ -454,6 +458,13 @@ function initParticleWave() {
     gap = w > 900 ? GAP : GAP * 0.8;
     cols = Math.ceil(w / gap) + 1;
 
+    /* built once per resize so the hot loop never hashes anything */
+    phase = new Float32Array(cols * ROWS);
+    for (let i = 0; i < phase.length; i++) {
+      const s = Math.sin(i * 12.9898 + 78.233) * 43758.5453;
+      phase[i] = (s - Math.floor(s)) * TAU;
+    }
+
     grad = ctx.createLinearGradient(0, 0, w, 0);
     grad.addColorStop(0.00, '#00e9f0');
     grad.addColorStop(0.34, '#4d7cff');
@@ -465,6 +476,7 @@ function initParticleWave() {
     if (!w || !h) { if (running) raf = requestAnimationFrame(draw); return; }
 
     const t = now * 0.0007;
+    const tc = now * 0.0042;   // the scatter runs far quicker than the swell
     ctx.clearRect(0, 0, w, h);
     ctx.fillStyle = grad;
 
@@ -514,6 +526,24 @@ function initParticleWave() {
             const pull = Math.min(PULL * f * f, d * 0.82);
             x += (dx / d) * pull;
             y += (dy / d) * pull;
+
+            /* Scatter on top of the pull. Each particle carries its own phase
+               and the two axes run at different rates, so neighbours never
+               agree on where to go.
+               Speed rises toward the pointer by cross-fading a slow drift
+               into a quick buzz — both frequencies are constant, so only
+               their weights move with f. Scaling a single frequency by f
+               instead would jerk the phase every time f shifted, which reads
+               as flicker rather than as speed. */
+            const ph = phase[r * cols + c];
+            const jitter = CHAOS * f * f;
+            const quick = f * f;
+            const drift = 1 - quick;
+            x += (Math.sin(tc + ph) * drift +
+                  Math.sin(tc * 4.3 + ph * 2.1) * quick) * jitter;
+            y += (Math.cos(tc * 0.79 + ph * 1.7) * drift +
+                  Math.cos(tc * 3.6 + ph * 2.9) * quick) * jitter;
+
             rad += f * 1.6;
           }
         }
