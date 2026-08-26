@@ -1,0 +1,12 @@
+{
+  "name": "Vitaliy Vostrikov — Full-stack developer & designer",
+  "short_name": "Vostrikov",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#08090c",
+  "theme_color": "#08090c",
+  "icons": [
+    { "src": "assets/img/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "assets/img/me.png", "sizes": "191x191", "type": "image/png" }
+  ]
+}

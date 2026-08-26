@@ -1,98 +1,366 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" data-theme="dark">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vitaliy Vostrikov — Full-stack developer &amp; designer</title>
+<meta name="description" content="Full-stack developer and designer in Moscow. Thirteen years of Flutter, Dart and Go — business-process platforms, identity services and field apps. Open source, and design on Behance.">
+<meta name="author" content="Vitaliy Vostrikov">
+<meta name="theme-color" content="#08090c" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f4f4f2" media="(prefers-color-scheme: light)">
 
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
+<link rel="canonical" href="https://hecatoncheir.github.io/">
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://hecatoncheir.github.io/">
+<meta property="og:title" content="Vitaliy Vostrikov — Full-stack developer &amp; designer">
+<meta property="og:description" content="Flutter and Dart on the front, Go on the back, and I draw them myself. Thirteen years of shipping.">
+<meta property="og:image" content="https://hecatoncheir.github.io/assets/img/me.png">
+<meta name="twitter:card" content="summary">
 
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-  -->
-  <base href="/">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/me.png">
+<link rel="manifest" href="manifest.webmanifest">
 
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://mir-s3-cdn-cf.behance.net">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="rework_2021">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Vitaliy Vostrikov",
+  "alternateName": "Виталий Востриков",
+  "url": "https://hecatoncheir.github.io/",
+  "image": "https://hecatoncheir.github.io/assets/img/me.png",
+  "email": "mailto:vostrikov.vitaliy.mikhailovich@gmail.com",
+  "jobTitle": "Full-stack developer",
+  "address": { "@type": "PostalAddress", "addressLocality": "Moscow", "addressCountry": "RU" },
+  "worksFor": { "@type": "Organization", "name": "WestCall Ltd." },
+  "knowsLanguage": ["ru", "en"],
+  "knowsAbout": ["Flutter", "Dart", "Go", "Rust", "gRPC", "GraphQL", "BPMN", "Docker", "Kubernetes", "UI design"],
+  "sameAs": [
+    "https://github.com/Hecatoncheir",
+    "https://www.behance.net/Hecatoncheir",
+    "https://career.habr.com/vostrikov-vitaliy2",
+    "https://profile.codersrank.io/user/rasarts"
+  ]
+}
+</script>
 
-  <title>rework_2021</title>
-  <link rel="manifest" href="manifest.json">
-</head>
-<body>
-  <!-- This script installs service_worker.js to provide PWA functionality to
-       application. For more information, see:
-       https://developers.google.com/web/fundamentals/primers/service-workers -->
-  <script>
-    var serviceWorkerVersion = '2958373265';
-    var scriptLoaded = false;
-    function loadMainDartJs() {
-      if (scriptLoaded) {
-        return;
-      }
-      scriptLoaded = true;
-      var scriptTag = document.createElement('script');
-      scriptTag.src = 'main.dart.js';
-      scriptTag.type = 'application/javascript';
-      document.body.append(scriptTag);
-    }
+<script>
+  /* Set the theme before first paint so there is no flash. */
+  (function () {
+    try {
+      var t = localStorage.getItem('vv-theme');
+      if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      else document.documentElement.dataset.theme =
+        window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      var l = localStorage.getItem('vv-lang');
+      if (l === 'ru' || l === 'en') document.documentElement.lang = l;
+    } catch (e) { /* private mode — defaults are fine */ }
 
+    /* The 2021 Flutter build installed a service worker that cached the whole
+       app shell. Anyone who visited back then still has it, and it would keep
+       serving that build instead of this page. Tear it down once. */
     if ('serviceWorker' in navigator) {
-      // Service workers are supported. Use them.
-      window.addEventListener('load', function () {
-        // Wait for registration to finish before dropping the <script> tag.
-        // Otherwise, the browser will load the script multiple times,
-        // potentially different versions.
-        var serviceWorkerUrl = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
-        navigator.serviceWorker.register(serviceWorkerUrl)
-          .then((reg) => {
-            function waitForActivation(serviceWorker) {
-              serviceWorker.addEventListener('statechange', () => {
-                if (serviceWorker.state == 'activated') {
-                  console.log('Installed new service worker.');
-                  loadMainDartJs();
-                }
-              });
-            }
-            if (!reg.active && (reg.installing || reg.waiting)) {
-              // No active web worker and we have installed or are installing
-              // one for the first time. Simply wait for it to activate.
-              waitForActivation(reg.installing ?? reg.waiting);
-            } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
-              // When the app updates the serviceWorkerVersion changes, so we
-              // need to ask the service worker to update.
-              console.log('New service worker available.');
-              reg.update();
-              waitForActivation(reg.installing);
-            } else {
-              // Existing service worker is still good.
-              console.log('Loading app from service worker.');
-              loadMainDartJs();
-            }
-          });
-
-        // If service worker doesn't succeed in a reasonable amount of time,
-        // fallback to plaint <script> tag.
-        setTimeout(() => {
-          if (!scriptLoaded) {
-            console.warn(
-              'Failed to load app from service worker. Falling back to plain <script> tag.',
-            );
-            loadMainDartJs();
-          }
-        }, 4000);
-      });
-    } else {
-      // Service workers not supported. Just drop the <script> tag.
-      loadMainDartJs();
+      navigator.serviceWorker.getRegistrations().then(function (regs) {
+        if (!regs.length) return;
+        Promise.all(regs.map(function (r) { return r.unregister(); })).then(function () {
+          if (!window.caches) return location.reload();
+          caches.keys()
+            .then(function (ks) { return Promise.all(ks.map(function (k) { return caches.delete(k); })); })
+            .then(function () { location.reload(); });
+        });
+      }).catch(function () { /* nothing registered, nothing to clean */ });
     }
-  </script>
+  })();
+</script>
+</head>
+
+<body>
+<a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+<div class="cursor-glow" aria-hidden="true"></div>
+
+<!-- ===================================================== nav ========== -->
+<header class="nav" id="nav">
+  <a class="brand" href="#top">
+    <span class="brand-mark"><span>VV</span></span>
+    <span data-i18n="PROFILE.name">Vitaliy Vostrikov</span>
+  </a>
+
+  <nav class="nav-links" aria-label="Sections">
+    <a href="#about"   data-i18n="UI.navAbout">About</a>
+    <a href="#work"    data-i18n="UI.navWork">Work</a>
+    <a href="#stack"   data-i18n="UI.secStack">Stack</a>
+    <a href="#code"    data-i18n="UI.navCode">Code</a>
+    <a href="#design"  data-i18n="UI.navDesign">Design</a>
+    <a href="#contact" data-i18n="UI.navContact">Contact</a>
+  </nav>
+
+  <div class="nav-tools">
+    <div class="chip lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="ru" aria-pressed="false">RU</button>
+    </div>
+    <button type="button" class="chip" id="theme-btn" aria-label="Toggle theme" title="Toggle theme">
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+    </button>
+    <a class="chip" href="https://github.com/Hecatoncheir" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.8 2.7 1.3 3.4 1 .1-.7.4-1.3.7-1.5-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.3 11.3 0 0 1 6 0C17.5 5 18.5 5.3 18.5 5.3c.7 1.6.2 2.8.1 3.1.8.9 1.2 1.9 1.2 3.2 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>
+    </a>
+    <button type="button" class="chip menu-btn" id="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- full-screen menu, phones and small tablets only -->
+<div class="menu" id="menu" hidden>
+  <button type="button" class="menu-close" id="menu-close" aria-label="Close menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+  </button>
+  <nav class="menu-links" aria-label="Sections">
+    <a href="#about"   data-i18n="UI.navAbout">About</a>
+    <a href="#work"    data-i18n="UI.navWork">Work</a>
+    <a href="#stack"   data-i18n="UI.secStack">Stack</a>
+    <a href="#code"    data-i18n="UI.navCode">Code</a>
+    <a href="#design"  data-i18n="UI.navDesign">Design</a>
+    <a href="#contact" data-i18n="UI.navContact">Contact</a>
+  </nav>
+  <div class="menu-foot">
+    <a href="https://github.com/Hecatoncheir" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://www.behance.net/Hecatoncheir" target="_blank" rel="noopener">Behance</a>
+    <a href="mailto:vostrikov.vitaliy.mikhailovich@gmail.com">Email</a>
+  </div>
+</div>
+
+<main id="main">
+<span id="top"></span>
+
+<!-- ==================================================== hero ========== -->
+<section class="hero">
+  <canvas id="wave" aria-hidden="true"></canvas>
+
+  <div class="shell">
+    <p class="hero-badge">
+      <span class="pulse" aria-hidden="true"></span>
+      <span data-i18n="UI.available">Open to interesting work</span>
+    </p>
+
+    <h1 class="hero-name">
+      <span class="l1" data-i18n="hero.first">Vitaliy</span>
+      <span class="l2" data-i18n="hero.last">Vostrikov</span>
+    </h1>
+
+    <p class="hero-role">
+      <span data-i18n="PROFILE.role">Full-stack developer</span>
+      <span class="slash" aria-hidden="true">/</span>
+      <span data-i18n="PROFILE.roleAlt">&amp; designer</span>
+    </p>
+
+    <p class="hero-tagline" data-i18n="PROFILE.tagline">
+      I build products end to end — Flutter on the front, Go on the back, and I draw them myself.
+    </p>
+
+    <div class="hero-cta">
+      <a class="btn magnetic" href="#code">
+        <span data-i18n="hero.ctaWork">See the work</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn--ghost magnetic" href="mailto:vostrikov.vitaliy.mikhailovich@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        <span data-i18n="hero.ctaMail">Get in touch</span>
+      </a>
+      <a class="btn btn--ghost magnetic" href="https://www.behance.net/Hecatoncheir" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.2 6.5c1 0 1.9.1 2.6.3.8.2 1.4.5 1.9.8.5.4.9.9 1.1 1.4.2.6.4 1.3.4 2.1 0 .9-.2 1.7-.6 2.3-.4.6-1 1.1-1.9 1.5 1.1.3 2 .9 2.5 1.7.6.8.8 1.8.8 2.9 0 .9-.2 1.7-.5 2.4-.4.7-.8 1.2-1.4 1.6-.6.4-1.3.7-2.1.9-.8.2-1.6.3-2.4.3H0V6.5h9.2Zm-.5 7c.8 0 1.4-.2 1.9-.5.5-.4.7-1 .7-1.8 0-.5-.1-.8-.2-1.1-.2-.3-.4-.5-.7-.7-.3-.2-.6-.3-1-.3-.4-.1-.8-.1-1.2-.1H4v4.5h4.7Zm.3 7.4c.4 0 .9 0 1.3-.1.4-.1.7-.2 1-.4.3-.2.5-.5.7-.8.2-.3.3-.8.3-1.3 0-1-.3-1.7-.8-2.2-.6-.4-1.3-.6-2.3-.6H4v5.4h5ZM19.6 20.6c.5.5 1.3.8 2.3.8.7 0 1.4-.2 1.9-.6.5-.4.8-.8.9-1.2H27c-.5 1.6-1.3 2.7-2.3 3.4-1 .7-2.3 1-3.8 1-1 0-2-.2-2.8-.5-.8-.3-1.5-.8-2.1-1.4a6 6 0 0 1-1.3-2.2c-.3-.9-.5-1.8-.5-2.8 0-1 .2-1.9.5-2.8.3-.9.8-1.6 1.4-2.2a6 6 0 0 1 2.1-1.5c.8-.4 1.7-.5 2.7-.5 1.1 0 2.1.2 3 .7.8.4 1.5 1 2.1 1.8.5.7.9 1.6 1.2 2.5.2.9.3 1.9.2 2.9h-9.5c0 1.2.4 2.1.9 2.6Zm4.1-7c-.4-.5-1.1-.7-2-.7-.6 0-1.1.1-1.5.3-.4.2-.7.5-.9.8-.2.3-.4.6-.5.9-.1.3-.1.6-.2.8h5.9c-.2-1-.5-1.7-.8-2.1ZM17.4 7.7h7.4v1.8h-7.4V7.7Z"/></svg>
+        <span data-i18n="hero.ctaDesign">Behance</span>
+      </a>
+    </div>
+
+    <div class="hero-stats" id="hero-stats"></div>
+  </div>
+
+  <p class="scroll-hint"><i aria-hidden="true"></i><span data-i18n="UI.scroll">Scroll</span></p>
+</section>
+
+<!-- ================================================== about =========== -->
+<section class="section shell" id="about">
+  <div class="section-head reveal">
+    <p class="section-num">01</p>
+    <div>
+      <h2 class="section-title" data-i18n="UI.secAbout">About</h2>
+    </div>
+  </div>
+
+  <div class="about-grid">
+    <div class="reveal">
+      <figure class="portrait">
+        <img src="assets/img/me.png" alt="Vitaliy Vostrikov" width="191" height="191" loading="lazy" decoding="async">
+      </figure>
+      <div class="about-meta" id="about-meta"></div>
+    </div>
+
+    <div class="about-body reveal" id="about-body" style="--d:120ms"></div>
+  </div>
+
+  <div class="what-grid reveal" id="what-grid"></div>
+
+  <div class="two-up">
+    <div class="reveal">
+      <p class="label-inline" data-i18n="ABOUT.toolsLabel">I prefer some cool tools</p>
+      <div class="tag-cloud" id="tools"></div>
+    </div>
+    <div class="reveal" style="--d:120ms">
+      <p class="label-inline" data-i18n="ABOUT.brandsLabel">Worked with brands</p>
+      <div class="brands" id="brands"></div>
+    </div>
+  </div>
+
+  <div class="two-up">
+    <div class="reveal">
+      <p class="label-inline" data-i18n="UI.education">Education</p>
+      <div id="education"></div>
+    </div>
+    <div class="reveal" style="--d:120ms">
+      <p class="label-inline" data-i18n="UI.langs">Languages</p>
+      <div id="languages"></div>
+    </div>
+  </div>
+</section>
+
+<!-- =================================================== work =========== -->
+<section class="section shell" id="work">
+  <div class="section-head reveal">
+    <p class="section-num">02</p>
+    <div>
+      <h2 class="section-title" data-i18n="UI.secWork">Experience</h2>
+      <p class="section-lead" data-i18n="UI.workIntro">Three places in thirteen years. The last one for ten of them.</p>
+    </div>
+  </div>
+  <div class="timeline" id="timeline"></div>
+</section>
+
+<!-- ================================================== marquee ========= -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marquee"></div>
+</div>
+
+<!-- ================================================== stack =========== -->
+<section class="section shell" id="stack">
+  <div class="section-head reveal">
+    <p class="section-num">03</p>
+    <div>
+      <h2 class="section-title" data-i18n="UI.secStack">Stack</h2>
+      <p class="section-lead" data-i18n="UI.stackIntro">What I reach for, and how often.</p>
+    </div>
+  </div>
+  <div class="stack-grid" id="stack-grid"></div>
+</section>
+
+<!-- =================================================== code =========== -->
+<section class="section shell" id="code">
+  <div class="section-head reveal">
+    <p class="section-num">04</p>
+    <div>
+      <h2 class="section-title" data-i18n="UI.secCode">Open source</h2>
+      <p class="section-lead" data-i18n="UI.codeIntro">136 public repositories. These are the ones worth your time — the rest is searchable below.</p>
+    </div>
+  </div>
+
+  <div class="repo-grid reveal" id="featured-repos"></div>
+
+  <div style="margin-top:clamp(3rem,7vw,5rem)">
+    <p class="label-inline" data-i18n="UI.allRepos">All repositories</p>
+    <div class="filters" id="filters">
+      <label class="search">
+        <span class="sr-only" data-i18n="UI.searchRepos">Filter repositories…</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" id="repo-search" autocomplete="off" placeholder="Filter repositories…">
+      </label>
+      <div id="lang-pills" style="display:flex;flex-wrap:wrap;gap:.5rem"></div>
+    </div>
+    <p class="repo-status" id="repo-status" aria-live="polite">Loading from GitHub…</p>
+    <div class="repo-grid" id="all-repos"></div>
+    <div class="more-wrap" id="more-wrap" hidden>
+      <button type="button" class="btn btn--ghost magnetic" id="more-btn">
+        <span data-i18n="UI.showMore">Show more</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================= design =========== -->
+<section class="section shell" id="design">
+  <div class="section-head reveal">
+    <p class="section-num">05</p>
+    <div>
+      <h2 class="section-title" data-i18n="UI.secDesign">Design</h2>
+      <p class="section-lead" data-i18n="UI.designIntro">Before the code there was Maya, two certificates and a lot of type. It never went away.</p>
+    </div>
+  </div>
+  <div class="work-grid reveal" id="work-grid"></div>
+</section>
+
+<!-- ================================================ contact =========== -->
+<section class="section shell contact" id="contact">
+  <div class="section-head reveal">
+    <p class="section-num">06</p>
+    <div>
+      <h2 class="section-title" data-i18n="UI.secContact">Contact</h2>
+      <p class="section-lead" data-i18n="UI.contactLead">Best reached by email. I read everything.</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <a class="contact-mail" href="mailto:vostrikov.vitaliy.mikhailovich@gmail.com">vostrikov.vitaliy.mikhailovich@gmail.com</a>
+
+    <div class="contact-actions">
+      <button type="button" class="btn magnetic" id="copy-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span id="copy-label" data-i18n="UI.copyEmail">Copy</span>
+      </button>
+      <a class="btn btn--ghost magnetic" href="https://career.habr.com/vostrikov-vitaliy2" target="_blank" rel="noopener">
+        <span data-i18n="contact.cv">Résumé on Habr Career</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="socials reveal" id="socials"></div>
+</section>
+</main>
+
+<img class="divider-wave" src="assets/img/divider.png" alt="" role="presentation" loading="lazy">
+
+<footer class="footer">
+  <div class="shell footer-inner">
+    <p>© <span id="year">2026</span> Vitaliy Vostrikov · <span data-i18n="PROFILE.location">Moscow, Russia</span></p>
+    <p data-i18n="UI.builtWith">Hand-written HTML, CSS and JavaScript. No framework, no build step.</p>
+  </div>
+</footer>
+
+<button type="button" class="to-top" id="to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+</button>
+
+<noscript>
+  <div class="shell" style="padding-block:3rem">
+    <p style="font-family:var(--mono);font-size:.85rem;line-height:1.8">
+      Vitaliy Vostrikov — full-stack developer &amp; designer, Moscow.
+      Flutter, Dart, Go, Rust. 13+ years, most of them at WestCall building a BPMN platform,
+      an SSO service and field applications.
+      <a href="https://github.com/Hecatoncheir" style="text-decoration:underline">GitHub</a> ·
+      <a href="https://www.behance.net/Hecatoncheir" style="text-decoration:underline">Behance</a> ·
+      <a href="mailto:vostrikov.vitaliy.mikhailovich@gmail.com" style="text-decoration:underline">Email</a>
+    </p>
+  </div>
+</noscript>
+
+<script type="module" src="assets/js/app.js"></script>
 </body>
 </html>
