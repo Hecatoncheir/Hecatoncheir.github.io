@@ -862,6 +862,14 @@ section { position: relative; }
   color: var(--ink-2);
 }
 .about-meta div { display: flex; gap: 0.6rem; align-items: baseline; }
+/* The link text alone boxes out at 19px, under the 24px WCAG 2.2 asks for.
+   The padding takes it to 24 and the negative margin pulls the extra back out
+   of the flow, so the rows keep the spacing they had. */
+.about-meta a {
+  display: inline-block;
+  padding-block: 0.16rem;
+  margin-block: -0.16rem;
+}
 .about-meta b {
   color: var(--ink-3);
   font-weight: 500;

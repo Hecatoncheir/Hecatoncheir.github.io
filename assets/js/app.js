@@ -360,10 +360,23 @@ function renderAllRepos() {
     : `<p class="repo-status">${esc(t(UI.noResults))}</p>`;
 
   $('#more-wrap').hidden = list.length <= visible;
-  bindTilt($('#all-repos'));
 }
 
 /* ---------------------------------------------------------- motion ------ */
+
+/**
+ * A bounding rect that refreshes on scroll and resize instead of on every read.
+ * getBoundingClientRect() forces layout, and the pointermove handlers below run
+ * on every reported mouse position — up to 120 a second on a trackpad — while
+ * the rect itself only moves when the page does.
+ */
+function trackRect(el) {
+  let r = el.getBoundingClientRect();
+  const update = () => { r = el.getBoundingClientRect(); };
+  addEventListener('scroll', update, { passive: true });
+  addEventListener('resize', update, { passive: true });
+  return () => r;
+}
 
 /** Neon wave field behind the hero. Redraws only while the hero is on screen. */
 function initWave() {
@@ -439,8 +452,9 @@ function initWave() {
   size();
   addEventListener('resize', () => { size(); if (reduce) draw(0); }, { passive: true });
 
+  const rectOf = trackRect(cv);
   addEventListener('pointermove', (e) => {
-    const r = cv.getBoundingClientRect();
+    const r = rectOf();
     pointer.tx = (e.clientX - r.left) / r.width;
     pointer.ty = (e.clientY - r.top) / r.height;
   }, { passive: true });
@@ -597,8 +611,9 @@ function initParticleWave() {
   size();
   addEventListener('resize', () => { size(); if (reduce) draw(0); }, { passive: true });
 
+  const rectOf = trackRect(cv);
   addEventListener('pointermove', (e) => {
-    const r = cv.getBoundingClientRect();
+    const r = rectOf();
     ptr.x = e.clientX - r.left;
     ptr.y = e.clientY - r.top;
     /* only worth testing against when the pointer is anywhere near the strip */
@@ -659,10 +674,18 @@ function initMagnetic() {
   }, { passive: true });
 }
 
-/** Repo cards light up under the pointer. */
-function bindTilt(root) {
-  $$('.repo', root).forEach((card) => {
-    card.addEventListener('pointermove', (e) => {
+/**
+ * Repo cards light up under the pointer. One listener per grid rather than one
+ * per card: the grids are rebuilt on every search keystroke, filter click and
+ * language switch, and binding each card meant a fresh listener per card per
+ * rebuild — twice over, since the boot sequence bound the grid and then the
+ * whole document on top of it.
+ */
+function initTilt() {
+  ['#featured-repos', '#all-repos'].forEach((sel) => {
+    $(sel)?.addEventListener('pointermove', (e) => {
+      const card = e.target.closest?.('.repo');
+      if (!card) return;
       const r = card.getBoundingClientRect();
       card.style.setProperty('--mx', `${e.clientX - r.left}px`);
       card.style.setProperty('--my', `${e.clientY - r.top}px`);
@@ -670,14 +693,19 @@ function bindTilt(root) {
   });
 }
 
-function initReveal() {
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
-    });
-  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+/* Built once and reused. renderAll() runs again on a language switch, and a
+   fresh observer each time would leave the previous one watching every .reveal
+   that survived the re-render — one extra observer over ~20 nodes per switch. */
+const revealIO = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add('is-in'); revealIO.unobserve(e.target); }
+  });
+}, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
 
-  $$('.reveal').forEach((el) => io.observe(el));
+function initReveal() {
+  /* the ones already revealed keep their class through a re-render and have
+     nothing left to observe for */
+  $$('.reveal').forEach((el) => { if (!el.classList.contains('is-in')) revealIO.observe(el); });
 }
 
 function initNav() {
@@ -829,13 +857,13 @@ function renderAll() {
   renderLangPills();
   renderAllRepos();
   initReveal();
-  bindTilt(document);
 }
 
 renderMarquee();
 renderAll();
 initWave();
 initParticleWave();
+initTilt();
 initCursor();
 initMagnetic();
 initNav();

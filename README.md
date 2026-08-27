@@ -15,7 +15,7 @@ assets/css/style.css     @font-face block, design tokens + every component
 assets/fonts/            self-hosted woff2, latin / latin-ext / cyrillic
 assets/js/data.js        all content, each string an { en, ru } pair
 assets/js/app.js         rendering, i18n, GitHub fetch, canvas, interactions
-assets/img/              portrait, favicon, social card, Behance covers
+assets/img/              portrait, icons, social card, Behance covers
 ```
 
 ## Regenerating the social card
@@ -27,6 +27,22 @@ card stays reproducible:
 ```bash
 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu --window-size=1200,630 --virtual-time-budget=6000 --screenshot=assets/img/og.png --user-data-dir=/tmp/chrome-og "file://$PWD/assets/img/og.source.html"
 ```
+
+## Regenerating the icons
+
+`favicon.svg` is the mark. `icon.source.svg` is the same mark full-bleed with a
+bit of inset, for the two consumers that apply their own mask. Both render with
+Quick Look, which needs no extra tooling:
+
+```bash
+qlmanage -t -s 192 -o /tmp/icons assets/img/favicon.svg && mv /tmp/icons/favicon.svg.png assets/img/icon-192.png
+```
+
+Repeat at `-s 512` for `icon-512.png`, and against `icon.source.svg` at `-s 512`
+for `icon-maskable-512.png` and `-s 180` for `apple-touch-icon.png`.
+
+A 192 and a 512 are what Chrome checks before it will offer to install the app;
+the portrait that used to stand in for them was 191x191 and missed by a pixel.
 
 ## Fonts
 

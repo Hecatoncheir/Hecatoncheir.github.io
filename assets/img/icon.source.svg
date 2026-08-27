@@ -1,0 +1,24 @@
+<!-- Full-bleed variant of favicon.svg, kept beside the PNGs it renders to so
+     they stay reproducible. Two consumers, both of which apply their own mask
+     and so want square corners and a mark that does not reach the edge:
+     the maskable manifest icon (Android crops to a circle of 80% diameter)
+     and apple-touch-icon (iOS rounds it into a squircle). The mark is scaled
+     to 0.85, which puts its furthest corner at r=23.7 inside the 25.6 the
+     maskable safe zone allows. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#00e9f0"/>
+      <stop offset="0.34" stop-color="#4d7cff"/>
+      <stop offset="0.68" stop-color="#a855f7"/>
+      <stop offset="1" stop-color="#ff2e93"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" fill="#08090c"/>
+  <g transform="translate(4.8 4.8) scale(0.85)">
+    <path d="M13 19 L26 45 L32 32" fill="none" stroke="url(#g)" stroke-width="7"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M32 32 L38 45 L51 19" fill="none" stroke="url(#g)" stroke-width="7"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
