@@ -28,9 +28,14 @@ export const PROFILE = {
   },
 };
 
+/* {all} and {original} in the strings below are filled from the GitHub API on
+   load. These are what renders when it is rate-limited or unreachable, and the
+   only place the numbers have to be touched by hand. */
+export const REPO_COUNTS = { all: '136', original: '89' };
+
 export const STATS = [
   { value: '18+', label: { en: 'years shipping', ru: 'лет в разработке' } },
-  { value: '136', label: { en: 'repos on GitHub', ru: 'репозиториев на GitHub' } },
+  { value: '{all}', label: { en: 'repos on GitHub', ru: 'репозиториев на GitHub' } },
   { value: '8.2K', label: { en: 'design views', ru: 'просмотров дизайна' } },
   { value: '~0%', label: { en: 'missed deadlines', ru: 'нарушений дедлайнов' } },
 ];
@@ -56,14 +61,14 @@ export const ABOUT = {
     {
       title: { en: 'Frontend', ru: 'Фронтенд' },
       lines: {
-        en: ['I use **Flutter** for mobile & web.', 'Outstanding **Dart**.'],
+        en: ['I use **Flutter** for mobile & web.', '**Dart** is outstanding.'],
         ru: ['**Flutter** для мобильных и веба.', 'Прекрасный **Dart**.'],
       },
     },
     {
       title: { en: 'Backend', ru: 'Бэкенд' },
       lines: {
-        en: ['On server-side **Go language** helps me make perfect services in less time.'],
+        en: ['On the server, **Go** gets solid services built in less time.'],
         ru: ['На сервере **Go** позволяет делать хорошие сервисы за меньшее время.'],
       },
     },
@@ -75,7 +80,7 @@ export const ABOUT = {
       },
     },
   ],
-  toolsLabel: { en: 'I prefer some cool tools', ru: 'Любимые инструменты' },
+  toolsLabel: { en: 'Tools I reach for', ru: 'Любимые инструменты' },
   tools: ['Docker', 'Kubernetes', 'GraphQL', 'Dgraph', 'Knative', 'GitLab CI', 'Hasura', 'PostgreSQL', 'RabbitMQ', 'gRPC', 'Neovim'],
   brandsLabel: { en: 'Worked with brands', ru: 'Работал с брендами' },
   brands: ['Tic Tac', 'Beeline', 'WestCall', 'Ростелеком', 'Raffaello', 'Связной', 'Choco-Pai', 'Росатом', 'Nutella', 'Домик в деревне'],
@@ -141,7 +146,10 @@ export const EXPERIENCE = [
     },
     position: { en: 'Software developer', ru: 'Программист' },
     period: { en: 'Dec 2015 — present', ru: 'Декабрь 2015 — наст. время' },
-    duration: { en: '10 yrs 9 mos', ru: '10 лет 9 мес' },
+    /* still running, so the length is counted from here rather than written
+       out — a literal went stale every month. The two finished jobs below
+       keep theirs, which are true forever. */
+    since: '2015-12',
     current: true,
     summary: {
       en: 'Ten years of building the internal platform a regional ISP runs on — process engine, identity, and the field apps that touch it.',
@@ -564,8 +572,8 @@ export const UI = {
     ru: 'Три места за тринадцать лет. Последнее — десять из них.',
   },
   codeIntro: {
-    en: '136 public repositories, 89 of which are original (not forked). Here are the ones worth checking out — the rest can be found in my GitHub profile.',
-    ru: '136 публичных репозиториев, 89 из них написаны, а не форкнуты. Вот те, что стоят внимания — остальные в профиле на GitHub.',
+    en: '{all} public repositories, {original} of which are original (not forked). Here are the ones worth checking out — the rest can be found in my GitHub profile.',
+    ru: '{all} публичных репозиториев, {original} из них написаны, а не форкнуты. Вот те, что стоят внимания — остальные в профиле на GitHub.',
   },
   designIntro: {
     en: 'Proficient in Maya; hold two Autodesk certifications.',

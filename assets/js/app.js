@@ -4,7 +4,7 @@
    ========================================================================== */
 
 import { PROFILE, STATS, ABOUT, STACK, EXPERIENCE, EDUCATION, LANGUAGES,
-         FEATURED_REPOS, BEHANCE, UI } from './data.js';
+         FEATURED_REPOS, BEHANCE, UI, REPO_COUNTS } from './data.js';
 
 /* ------------------------------------------------------------ i18n ------ */
 
@@ -32,6 +32,36 @@ const t = (v) => (v && typeof v === 'object' && 'en' in v ? (v[lang] ?? v.en) : 
 /** Look up a dotted path in the content tree. */
 function lookup(path) {
   return path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), TREE);
+}
+
+/* Repository counts, filled by loadRepos() once the API answers. Until then
+   — and for good, if it is rate-limited — these are what data.js ships. */
+const counts = { ...REPO_COUNTS };
+
+/** Swap {all} / {original} for the live counts. */
+const fill = (s) => String(s).replace(/\{(all|original)\}/g, (_, k) => counts[k]);
+
+/**
+ * "10 yrs 9 mos" / "10 лет 9 мес" from a YYYY-MM start, counted inclusively so
+ * the first month on the job counts as worked — the same way hh.ru totals it,
+ * and what the literal this replaced said.
+ */
+function sinceLabel(ym) {
+  const [y, m] = ym.split('-').map(Number);
+  const now = new Date();
+  const months = (now.getFullYear() - y) * 12 + (now.getMonth() + 1 - m) + 1;
+  const yrs = Math.floor(months / 12);
+  const mos = months % 12;
+
+  if (lang === 'ru') {
+    /* 21 год, 22 года, 25 лет — the 11-14 band is the exception to the rule */
+    const t100 = yrs % 100, t10 = yrs % 10;
+    const word = (t100 >= 11 && t100 <= 14) ? 'лет'
+      : t10 === 1 ? 'год' : (t10 >= 2 && t10 <= 4) ? 'года' : 'лет';
+    return [yrs ? `${yrs} ${word}` : '', mos ? `${mos} мес` : ''].filter(Boolean).join(' ');
+  }
+  return [yrs ? `${yrs} yr${yrs === 1 ? '' : 's'}` : '',
+          mos ? `${mos} mo${mos === 1 ? '' : 's'}` : ''].filter(Boolean).join(' ');
 }
 
 /** Minimal **bold** support for the short marketing lines. */
@@ -73,7 +103,7 @@ function renderStatic() {
   /* every data-i18n node in the HTML */
   $$('[data-i18n]').forEach((el) => {
     const v = lookup(el.dataset.i18n);
-    if (v !== undefined) el.textContent = t(v);
+    if (v !== undefined) el.textContent = fill(t(v));
   });
 
   document.documentElement.lang = lang;
@@ -90,7 +120,7 @@ function renderStatic() {
 function renderHeroStats() {
   $('#hero-stats').innerHTML = STATS.map((s) => `
     <div class="stat">
-      <div class="stat-value">${esc(s.value)}</div>
+      <div class="stat-value">${esc(fill(s.value))}</div>
       <div class="stat-label">${esc(t(s.label))}</div>
     </div>`).join('');
 }
@@ -138,7 +168,7 @@ function renderTimeline() {
       <div class="job-head">
         <div class="job-when">
           <span class="period">${esc(t(job.period))}</span>
-          <span class="dur">${esc(t(job.duration))}</span>
+          <span class="dur">${esc(job.since ? sinceLabel(job.since) : t(job.duration))}</span>
           ${job.current ? `<span class="badge-now"><span class="pulse"></span>${lang === 'ru' ? 'Сейчас' : 'Current'}</span>` : ''}
         </div>
         <div>
@@ -269,26 +299,39 @@ function readRepoCache() {
   try {
     const raw = localStorage.getItem(REPO_CACHE_KEY);
     if (!raw) return null;
-    const { ts, repos } = JSON.parse(raw);
+    const { ts, repos, total } = JSON.parse(raw);
     if (!Array.isArray(repos) || !repos.length) return null;
     if (Date.now() - ts > REPO_CACHE_TTL) return null;
-    return repos;
+    return { repos, total };
   } catch {
     return null;   // absent, stale, corrupt or blocked — all mean "just fetch"
   }
 }
 
-function writeRepoCache(repos) {
+function writeRepoCache(repos, total) {
   try {
-    localStorage.setItem(REPO_CACHE_KEY, JSON.stringify({ ts: Date.now(), repos }));
+    localStorage.setItem(REPO_CACHE_KEY, JSON.stringify({ ts: Date.now(), repos, total }));
   } catch { /* private mode or quota — the page works fine without it */ }
+}
+
+/**
+ * The hero stat and the Open source lead both quote these. Repainting the two
+ * places that carry them keeps the page from stating a number it counted
+ * itself and a number someone typed in months ago.
+ */
+function publishCounts(total) {
+  if (total) counts.all = String(total);
+  counts.original = String(allRepos.length);
+  renderStatic();
+  renderHeroStats();
 }
 
 async function loadRepos() {
   const cached = readRepoCache();
   if (cached) {
-    allRepos = cached;
+    allRepos = cached.repos;
     repoSource = 'live';
+    publishCounts(cached.total);
     paintRepoStatus();
     renderLangPills();
     renderAllRepos();
@@ -300,7 +343,8 @@ async function loadRepos() {
       fetch(`https://api.github.com/users/Hecatoncheir/repos?per_page=100&page=${p}&sort=updated`)
         .then((r) => (r.ok ? r.json() : Promise.reject(new Error(r.status))))));
 
-    allRepos = pages.flat()
+    const every = pages.flat();
+    allRepos = every
       .filter((r) => !r.fork && !r.archived)
       .map((r) => ({
         name: r.name,
@@ -313,7 +357,8 @@ async function loadRepos() {
       .sort((a, b) => (b.stars - a.stars) || (b.updated < a.updated ? -1 : 1));
 
     repoSource = 'live';
-    writeRepoCache(allRepos);
+    publishCounts(every.length);
+    writeRepoCache(allRepos, every.length);
   } catch {
     /* rate-limited or offline — the curated set still tells the story */
     allRepos = FEATURED_REPOS.map((r) => ({ ...r }));
