@@ -29,15 +29,24 @@ export const PROFILE = {
 };
 
 /* {all} and {original} in the strings below are filled from the GitHub API on
-   load. These are what renders when it is rate-limited or unreachable, and the
-   only place the numbers have to be touched by hand. ({works} needs no
-   fallback — it is counted from the BEHANCE array further down this file.) */
+   load. These are what renders when it is rate-limited or unreachable. */
 export const REPO_COUNTS = { all: '136', original: '89' };
+
+/* {works} — every project on the Behance profile, not the twelve the Design
+   section shows, which are a selection. Behance publishes no API and the page
+   itself renders client-side, so there is nothing to count this from: it is
+   set here by hand and nowhere else, and only moves when something new is
+   published. */
+export const BEHANCE_TOTAL = '54';
 
 export const STATS = [
   { value: '18+', label: { en: 'years shipping', ru: 'лет в разработке' } },
-  { value: '{all}', label: { en: 'repos on GitHub', ru: 'репозиториев на GitHub' } },
-  { value: '{works}', label: { en: 'projects on Behance', ru: 'работ на Behance' } },
+  /* Russian counts decline with the number, and both of these move on their own
+     — one from the API, one when something new is published — so the label is
+     three forms and app.js picks. English only breaks at one, which neither of
+     these will ever be. */
+  { value: '{all}', label: { en: 'repos on GitHub', ru: ['репозиторий на GitHub', 'репозитория на GitHub', 'репозиториев на GitHub'] } },
+  { value: '{works}', label: { en: 'projects on Behance', ru: ['работа на Behance', 'работы на Behance', 'работ на Behance'] } },
   { value: '~0%', label: { en: 'missed deadlines', ru: 'нарушений дедлайнов' } },
 ];
 

@@ -4,7 +4,7 @@
    ========================================================================== */
 
 import { PROFILE, STATS, ABOUT, STACK, EXPERIENCE, EDUCATION, LANGUAGES,
-         FEATURED_REPOS, BEHANCE, UI, REPO_COUNTS } from './data.js';
+         FEATURED_REPOS, BEHANCE, UI, REPO_COUNTS, BEHANCE_TOTAL } from './data.js';
 
 /* ------------------------------------------------------------ i18n ------ */
 
@@ -34,14 +34,25 @@ function lookup(path) {
   return path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), TREE);
 }
 
-/* Counts quoted in the copy. The repository ones are filled by loadRepos()
-   once the API answers — until then, and for good if it is rate-limited, these
-   are what data.js ships. {works} is just the length of the Behance list, so it
-   is right from the first paint and matches what the Design section renders. */
-const counts = { ...REPO_COUNTS, works: String(BEHANCE.length) };
+/* Counts quoted in the copy. The repository ones are filled by loadRepos() once
+   the API answers — until then, and for good if it is rate-limited, these are
+   what data.js ships. {works} has no source to be counted from and is carried
+   as written. */
+const counts = { ...REPO_COUNTS, works: BEHANCE_TOTAL };
 
 /** Swap {all} / {original} / {works} for the counts above. */
 const fill = (s) => String(s).replace(/\{(all|original|works)\}/g, (_, k) => counts[k]);
+
+/**
+ * Russian counts take three forms: 1 год, 2-4 года, 5+ лет. The 11-14 band is
+ * the exception — it reads like the last group however it ends, so 12 лет and
+ * not 12 года.
+ */
+function plural(n, [one, few, many]) {
+  const t100 = n % 100, t10 = n % 10;
+  if (t100 >= 11 && t100 <= 14) return many;
+  return t10 === 1 ? one : (t10 >= 2 && t10 <= 4) ? few : many;
+}
 
 /**
  * "10 yrs 9 mos" / "10 лет 9 мес" from a YYYY-MM start, counted inclusively so
@@ -56,11 +67,8 @@ function sinceLabel(ym) {
   const mos = months % 12;
 
   if (lang === 'ru') {
-    /* 21 год, 22 года, 25 лет — the 11-14 band is the exception to the rule */
-    const t100 = yrs % 100, t10 = yrs % 10;
-    const word = (t100 >= 11 && t100 <= 14) ? 'лет'
-      : t10 === 1 ? 'год' : (t10 >= 2 && t10 <= 4) ? 'года' : 'лет';
-    return [yrs ? `${yrs} ${word}` : '', mos ? `${mos} мес` : ''].filter(Boolean).join(' ');
+    return [yrs ? `${yrs} ${plural(yrs, ['год', 'года', 'лет'])}` : '',
+            mos ? `${mos} мес` : ''].filter(Boolean).join(' ');
   }
   return [yrs ? `${yrs} yr${yrs === 1 ? '' : 's'}` : '',
           mos ? `${mos} mo${mos === 1 ? '' : 's'}` : ''].filter(Boolean).join(' ');
@@ -119,11 +127,18 @@ function renderStatic() {
   $('#year').textContent = new Date().getFullYear();
 }
 
+/** A label given as three forms declines to match the number standing beside it. */
+function statLabel(stat) {
+  const label = t(stat.label);
+  if (!Array.isArray(label)) return label;
+  return plural(parseInt(fill(stat.value), 10) || 0, label);
+}
+
 function renderHeroStats() {
   $('#hero-stats').innerHTML = STATS.map((s) => `
     <div class="stat">
       <div class="stat-value">${esc(fill(s.value))}</div>
-      <div class="stat-label">${esc(t(s.label))}</div>
+      <div class="stat-label">${esc(statLabel(s))}</div>
     </div>`).join('');
 }
 
