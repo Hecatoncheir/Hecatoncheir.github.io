@@ -585,9 +585,12 @@ export const UI = {
     en: '{all} public repositories, {original} of which are original (not forked). Here are the ones worth checking out — the rest can be found in my GitHub profile.',
     ru: '{all} публичных репозиториев, {original} из них написаны, а не форкнуты. Вот те, что стоят внимания — остальные в профиле на GitHub.',
   },
+  /* Deliberately without a count. The hero stat carries it, and a number here
+     would need a noun agreeing with it — "из 54 работ" but "из 61 работы" —
+     which is a trap for copy nobody will revisit. */
   designIntro: {
-    en: 'Proficient in Maya; hold two Autodesk certifications.',
-    ru: 'Работал в Maya, есть два сертификата международного образца от Autodesk.',
+    en: 'Proficient in Maya; hold two Autodesk certifications. These are a selection — the rest are on Behance.',
+    ru: 'Работал в Maya, есть два сертификата международного образца от Autodesk. Здесь избранное — остальные работы в профиле на Behance.',
   },
   stackIntro: {
     en: 'Core technologies/tools I use.',
