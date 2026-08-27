@@ -34,12 +34,14 @@ function lookup(path) {
   return path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), TREE);
 }
 
-/* Repository counts, filled by loadRepos() once the API answers. Until then
-   — and for good, if it is rate-limited — these are what data.js ships. */
-const counts = { ...REPO_COUNTS };
+/* Counts quoted in the copy. The repository ones are filled by loadRepos()
+   once the API answers — until then, and for good if it is rate-limited, these
+   are what data.js ships. {works} is just the length of the Behance list, so it
+   is right from the first paint and matches what the Design section renders. */
+const counts = { ...REPO_COUNTS, works: String(BEHANCE.length) };
 
-/** Swap {all} / {original} for the live counts. */
-const fill = (s) => String(s).replace(/\{(all|original)\}/g, (_, k) => counts[k]);
+/** Swap {all} / {original} / {works} for the counts above. */
+const fill = (s) => String(s).replace(/\{(all|original|works)\}/g, (_, k) => counts[k]);
 
 /**
  * "10 yrs 9 mos" / "10 лет 9 мес" from a YYYY-MM start, counted inclusively so

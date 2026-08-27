@@ -30,13 +30,14 @@ export const PROFILE = {
 
 /* {all} and {original} in the strings below are filled from the GitHub API on
    load. These are what renders when it is rate-limited or unreachable, and the
-   only place the numbers have to be touched by hand. */
+   only place the numbers have to be touched by hand. ({works} needs no
+   fallback — it is counted from the BEHANCE array further down this file.) */
 export const REPO_COUNTS = { all: '136', original: '89' };
 
 export const STATS = [
   { value: '18+', label: { en: 'years shipping', ru: 'лет в разработке' } },
   { value: '{all}', label: { en: 'repos on GitHub', ru: 'репозиториев на GitHub' } },
-  { value: '8.2K', label: { en: 'design views', ru: 'просмотров дизайна' } },
+  { value: '{works}', label: { en: 'projects on Behance', ru: 'работ на Behance' } },
   { value: '~0%', label: { en: 'missed deadlines', ru: 'нарушений дедлайнов' } },
 ];
 
