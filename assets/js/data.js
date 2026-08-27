@@ -32,7 +32,7 @@ export const STATS = [
   { value: '18+', label: { en: 'years shipping', ru: 'лет в разработке' } },
   { value: '136', label: { en: 'repos on GitHub', ru: 'репозиториев на GitHub' } },
   { value: '8.2K', label: { en: 'design views', ru: 'просмотров дизайна' } },
-  // { value: '~20%', label: { en: 'team gain delivered', ru: 'рост эффективности' } },
+  { value: '~0%', label: { en: 'missed deadlines', ru: 'нарушений дедлайнов' } },
 ];
 
 /* --------------------------------------------------------------------------
@@ -565,7 +565,7 @@ export const UI = {
   },
   codeIntro: {
     en: '136 public repositories, 89 of which are original (not forked). Here are the ones worth checking out — the rest can be found in my GitHub profile.',
-    ru: '136 публичных репозиториев, 89 из них написаны, а не форкнуты. Вот те, что стоят внимания — остальные можно найти в профиле на GitHub.',
+    ru: '136 публичных репозиториев, 89 из них написаны, а не форкнуты. Вот те, что стоят внимания — остальные в профиле на GitHub.',
   },
   designIntro: {
     en: 'Proficient in Maya; hold two Autodesk certifications.',
