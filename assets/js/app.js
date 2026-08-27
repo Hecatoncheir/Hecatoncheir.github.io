@@ -259,7 +259,42 @@ function paintRepoStatus() {
     : `${allRepos.length} original repositories`;
 }
 
+/* The unauthenticated GitHub API allows 60 requests an hour per IP and this
+   page spends two of them per load. Caching the answer keeps a burst of
+   traffic from pushing visitors onto the fallback list. */
+const REPO_CACHE_KEY = 'vv-repos';
+const REPO_CACHE_TTL = 6 * 60 * 60 * 1000;
+
+function readRepoCache() {
+  try {
+    const raw = localStorage.getItem(REPO_CACHE_KEY);
+    if (!raw) return null;
+    const { ts, repos } = JSON.parse(raw);
+    if (!Array.isArray(repos) || !repos.length) return null;
+    if (Date.now() - ts > REPO_CACHE_TTL) return null;
+    return repos;
+  } catch {
+    return null;   // absent, stale, corrupt or blocked — all mean "just fetch"
+  }
+}
+
+function writeRepoCache(repos) {
+  try {
+    localStorage.setItem(REPO_CACHE_KEY, JSON.stringify({ ts: Date.now(), repos }));
+  } catch { /* private mode or quota — the page works fine without it */ }
+}
+
 async function loadRepos() {
+  const cached = readRepoCache();
+  if (cached) {
+    allRepos = cached;
+    repoSource = 'live';
+    paintRepoStatus();
+    renderLangPills();
+    renderAllRepos();
+    return;
+  }
+
   try {
     const pages = await Promise.all([1, 2].map((p) =>
       fetch(`https://api.github.com/users/Hecatoncheir/repos?per_page=100&page=${p}&sort=updated`)
@@ -278,6 +313,7 @@ async function loadRepos() {
       .sort((a, b) => (b.stars - a.stars) || (b.updated < a.updated ? -1 : 1));
 
     repoSource = 'live';
+    writeRepoCache(allRepos);
   } catch {
     /* rate-limited or offline — the curated set still tells the story */
     allRepos = FEATURED_REPOS.map((r) => ({ ...r }));

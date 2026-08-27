@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not found — Vitaliy Vostrikov</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#08090c" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f4f4f2" media="(prefers-color-scheme: light)">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Nunito:wght@400;700;800&family=Nunito+Sans:wght@400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css">
+
+<script>
+  /* same pre-paint resolution as the home page */
+  (function () {
+    var theme = null, lang = null;
+    try {
+      var t = localStorage.getItem('vv-theme');
+      if (t === 'light' || t === 'dark') theme = t;
+      var l = localStorage.getItem('vv-lang');
+      if (l === 'ru' || l === 'en') lang = l;
+    } catch (e) { /* private mode */ }
+    document.documentElement.dataset.theme = theme ||
+      (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    if (!lang) {
+      var pref = ((navigator.languages && navigator.languages[0]) ||
+                  navigator.language || '').toLowerCase();
+      lang = pref.split('-')[0] === 'ru' ? 'ru' : 'en';
+    }
+    document.documentElement.lang = lang;
+  })();
+</script>
+
+<style>
+  .oops {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.4rem;
+  }
+  .oops-code {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(5rem, 26vw, 18rem);
+    line-height: 0.86;
+    letter-spacing: -0.05em;
+    /* hug the digits: on a full-width block the visible half of the sweep
+       stops around violet and never reaches magenta */
+    width: fit-content;
+    background: var(--neon-mirror);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .oops-title {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(1.4rem, 4vw, 2.4rem);
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+  }
+  .oops-text {
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--ink-2);
+    max-width: 46ch;
+  }
+</style>
+</head>
+
+<body>
+<main class="shell oops">
+  <p class="oops-code">404</p>
+  <h1 class="oops-title" data-en="This page does not exist" data-ru="Такой страницы нет">This page does not exist</h1>
+  <p class="oops-text"
+     data-en="The link is wrong, or the page has moved. Everything I have is on the front page."
+     data-ru="Ссылка неверна или страница переехала. Всё, что у меня есть, — на главной.">
+    The link is wrong, or the page has moved. Everything I have is on the front page.
+  </p>
+  <p>
+    <a class="btn" href="/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      <span data-en="Back to the front page" data-ru="На главную">Back to the front page</span>
+    </a>
+  </p>
+</main>
+
+<script>
+  (function () {
+    var lang = document.documentElement.lang === 'ru' ? 'ru' : 'en';
+    document.querySelectorAll('[data-' + lang + ']').forEach(function (el) {
+      el.textContent = el.dataset[lang];
+    });
+    if (lang === 'ru') document.title = 'Страница не найдена — Виталий Востриков';
+  })();
+</script>
+</body>
+</html>

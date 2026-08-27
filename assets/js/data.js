@@ -30,7 +30,7 @@ export const PROFILE = {
 
 export const STATS = [
   { value: '13+', label: { en: 'years shipping', ru: 'лет в разработке' } },
-  { value: '136', label: { en: 'public repos', ru: 'репозиториев' } },
+  { value: '136', label: { en: 'repos on GitHub', ru: 'репозиториев на GitHub' } },
   { value: '8.2K', label: { en: 'design views', ru: 'просмотров дизайна' } },
   { value: '~20%', label: { en: 'team gain delivered', ru: 'рост эффективности' } },
 ];
@@ -429,7 +429,7 @@ export const BEHANCE = [
     appreciations: 32,
     views: 493,
     url: 'https://www.behance.net/gallery/55931725/Raven-fight-club',
-    cover: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd/4448ac55931725.59998fa408e90.png',
+    cover: 'assets/img/work/55931725.jpg',
     featured: true,
   },
   {
@@ -439,7 +439,7 @@ export const BEHANCE = [
     appreciations: 32,
     views: 312,
     url: 'https://www.behance.net/gallery/58998585/MMA-Raven-club-web-design',
-    cover: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/35f9e258998585.5a11a159aad15.jpg',
+    cover: 'assets/img/work/58998585.jpg',
     featured: true,
   },
   {
@@ -449,7 +449,7 @@ export const BEHANCE = [
     appreciations: 16,
     views: 214,
     url: 'https://www.behance.net/gallery/30470779/Pulsar-phone-covers-store',
-    cover: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd/3aace430470779.5624f5ab8685d.jpg',
+    cover: 'assets/img/work/30470779.jpg',
     featured: true,
   },
   {
@@ -459,7 +459,7 @@ export const BEHANCE = [
     appreciations: 7,
     views: 129,
     url: 'https://www.behance.net/gallery/27811431/HopUp-for-DIRECTUM',
-    cover: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_632/bcfc1e27811431.5636b21b94fa4.jpg',
+    cover: 'assets/img/work/27811431.jpg',
     featured: true,
   },
   {
@@ -469,7 +469,7 @@ export const BEHANCE = [
     appreciations: 2,
     views: 49,
     url: 'https://www.behance.net/gallery/168979999/Generated-wallpapers',
-    cover: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/76d9bd168979999.6444e0f990b7a.png',
+    cover: 'assets/img/work/168979999.jpg',
   },
   {
     title: { en: 'Generated images', ru: 'Сгенерированные изображения' },
@@ -478,7 +478,7 @@ export const BEHANCE = [
     appreciations: 3,
     views: 40,
     url: 'https://www.behance.net/gallery/165365329/Ganerated-images',
-    cover: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd/43c241165365329.64064f96655d9.jpg',
+    cover: 'assets/img/work/165365329.jpg',
   },
   {
     title: { en: 'Generated icons', ru: 'Сгенерированные иконки' },
@@ -487,7 +487,7 @@ export const BEHANCE = [
     appreciations: 0,
     views: 35,
     url: 'https://www.behance.net/gallery/165660685/Generated-icons',
-    cover: 'https://mir-s3-cdn-cf.behance.net/projects/max_808/19c0d8165660685.Y3JvcCw1NTksNDM3LDI3MywzNDU.jpg',
+    cover: 'assets/img/work/165660685.jpg',
   },
   {
     title: { en: 'Generated logo', ru: 'Сгенерированный логотип' },
@@ -496,7 +496,7 @@ export const BEHANCE = [
     appreciations: 0,
     views: 32,
     url: 'https://www.behance.net/gallery/165352517/Generated-logo',
-    cover: 'https://mir-s3-cdn-cf.behance.net/projects/max_808/b201ea165352517.Y3JvcCwxMDI0LDgwMCwwLDExMQ.png',
+    cover: 'assets/img/work/165352517.jpg',
   },
   {
     title: { en: 'SDXL generated images', ru: 'Изображения SDXL' },
@@ -505,7 +505,7 @@ export const BEHANCE = [
     appreciations: 0,
     views: 15,
     url: 'https://www.behance.net/gallery/177595649/SDXL-generated-images',
-    cover: 'https://mir-s3-cdn-cf.behance.net/projects/max_808/d545f5177595649.Y3JvcCw2MzAsNDkyLDI3OSww.png',
+    cover: 'assets/img/work/177595649.jpg',
   },
   {
     title: { en: 'Stable Diffusion generation', ru: 'Генерация Stable Diffusion' },
@@ -514,7 +514,7 @@ export const BEHANCE = [
     appreciations: 0,
     views: 15,
     url: 'https://www.behance.net/gallery/200638945/Stable-Diffusion-Generation',
-    cover: 'https://mir-s3-cdn-cf.behance.net/projects/max_808/d9c48f200638945.Y3JvcCw5MjAsNzIwLDI0OCww.png',
+    cover: 'assets/img/work/200638945.jpg',
   },
   {
     title: { en: 'Wallpapers', ru: 'Обои' },
@@ -523,7 +523,7 @@ export const BEHANCE = [
     appreciations: 0,
     views: 22,
     url: 'https://www.behance.net/gallery/253348875/Wallpapers',
-    cover: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/18bc9d253348875.6a671a28985fe.png',
+    cover: 'assets/img/work/253348875.jpg',
   },
   {
     title: { en: 'Wallpapers II', ru: 'Обои II' },
@@ -532,7 +532,7 @@ export const BEHANCE = [
     appreciations: 0,
     views: 66,
     url: 'https://www.behance.net/gallery/254420061/Wallpapers',
-    cover: 'https://mir-s3-cdn-cf.behance.net/projects/max_808/aef74e254420061.Y3JvcCwxOTYzLDE1MzYsMTIxLDA.png',
+    cover: 'assets/img/work/254420061.jpg',
   },
 ];
 
@@ -568,8 +568,8 @@ export const UI = {
     ru: 'Три места за тринадцать лет. Последнее — десять из них.',
   },
   codeIntro: {
-    en: '136 public repositories. These are the ones worth your time — the rest is searchable below.',
-    ru: '136 публичных репозиториев. Вот те, что стоят вашего внимания — остальные можно найти ниже.',
+    en: '136 public repositories, 89 of them written rather than forked. These are the ones worth your time — the rest is searchable below.',
+    ru: '136 публичных репозиториев, 89 из них написаны, а не форкнуты. Вот те, что стоят вашего внимания — остальные можно найти ниже.',
   },
   designIntro: {
     en: 'Before the code there was Maya, two certificates and a lot of type. It never went away.',

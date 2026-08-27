@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hecatoncheir.github.io/sitemap.xml
