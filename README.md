@@ -97,12 +97,12 @@ python3 -m http.server 4319
 ## Deployment
 
 GitHub Pages serves the `main` branch at the repository root. Push to `main` and
-it is live.
+it is live. There is no workflow file in the repository — the only thing that
+runs is Pages' own built-in `pages-build-deployment`.
 
-> **Note:** the old `rework_2021` branch holds a 2021 Flutter version of this
-> site, and its `.github/workflows/release.yml` builds that branch and force-pushes
-> the result over `main`. Disable or delete that workflow before pushing here, or
-> it will overwrite this site the next time it runs.
+`main` is the only branch. An earlier note here warned about a `rework_2021`
+branch whose `.github/workflows/release.yml` force-pushed a 2021 Flutter build
+over `main`; that branch is gone from the remote, so the hazard is gone with it.
 
 ## Browser support
 
