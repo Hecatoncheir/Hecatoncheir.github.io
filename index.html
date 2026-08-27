@@ -26,6 +26,11 @@
 <link rel="preconnect" href="https://mir-s3-cdn-cf.behance.net">
 <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400&family=Nunito:ital,wght@0,400..900;1,400..900&family=Nunito+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
+<!-- data.js is only discovered after app.js parses; preloading both turns a
+     two-step waterfall into one round trip, which is what the page waits on
+     before it can swap the markup's English for Russian -->
+<link rel="modulepreload" href="assets/js/app.js">
+<link rel="modulepreload" href="assets/js/data.js">
 
 <script type="application/ld+json">
 {
@@ -51,16 +56,28 @@
 </script>
 
 <script>
-  /* Set the theme before first paint so there is no flash. */
+  /* Settle theme and language before first paint so neither flashes. */
   (function () {
+    var theme = null, lang = null;
     try {
       var t = localStorage.getItem('vv-theme');
-      if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
-      else document.documentElement.dataset.theme =
-        window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      if (t === 'light' || t === 'dark') theme = t;
       var l = localStorage.getItem('vv-lang');
-      if (l === 'ru' || l === 'en') document.documentElement.lang = l;
-    } catch (e) { /* private mode — defaults are fine */ }
+      if (l === 'ru' || l === 'en') lang = l;
+    } catch (e) { /* private mode — fall through to what the browser reports */ }
+
+    document.documentElement.dataset.theme = theme ||
+      (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+
+    if (!lang) {
+      /* No stored choice yet: Russian browsers get Russian, everyone else
+         gets English. navigator.languages is in preference order, so a
+         reader who ranks English above Russian still lands on English. */
+      var pref = ((navigator.languages && navigator.languages[0]) ||
+                  navigator.language || '').toLowerCase();
+      lang = pref.split('-')[0] === 'ru' ? 'ru' : 'en';
+    }
+    document.documentElement.lang = lang;
 
     /* The 2021 Flutter build installed a service worker that cached the whole
        app shell. Anyone who visited back then still has it, and it would keep
