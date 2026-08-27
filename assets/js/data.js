@@ -11,12 +11,12 @@ export const PROFILE = {
     ru: 'Full-stack разработчик',
   },
   roleAlt: {
-    en: '& designer',
-    ru: '& дизайнер',
+    en: 'designer',
+    ru: 'дизайнер',
   },
   tagline: {
     en: 'I build products end to end — Flutter on the front, Go on the back, and I draw them myself.',
-    ru: 'Делаю продукты целиком — Flutter на клиенте, Go на сервере, и сам их рисую.',
+    ru: 'Делаю продукты целиком — Flutter на клиенте, Go на сервере, и сам делаю их дизайн.',
   },
   location: { en: 'Moscow, Russia', ru: 'Москва, Россия' },
   email: 'vostrikov.vitaliy.mikhailovich@gmail.com',
@@ -29,10 +29,10 @@ export const PROFILE = {
 };
 
 export const STATS = [
-  { value: '13+', label: { en: 'years shipping', ru: 'лет в разработке' } },
+  { value: '18+', label: { en: 'years shipping', ru: 'лет в разработке' } },
   { value: '136', label: { en: 'repos on GitHub', ru: 'репозиториев на GitHub' } },
   { value: '8.2K', label: { en: 'design views', ru: 'просмотров дизайна' } },
-  { value: '~20%', label: { en: 'team gain delivered', ru: 'рост эффективности' } },
+  // { value: '~20%', label: { en: 'team gain delivered', ru: 'рост эффективности' } },
 ];
 
 /* --------------------------------------------------------------------------
@@ -56,8 +56,8 @@ export const ABOUT = {
     {
       title: { en: 'Frontend', ru: 'Фронтенд' },
       lines: {
-        en: ['I use **Flutter** for mobile & web.', 'Outstanding **Dart**. I use it every day.'],
-        ru: ['**Flutter** для мобильных и веба.', 'Прекрасный **Dart**. Пишу на нём каждый день.'],
+        en: ['I use **Flutter** for mobile & web.', 'Outstanding **Dart**.'],
+        ru: ['**Flutter** для мобильных и веба.', 'Прекрасный **Dart**.'],
       },
     },
     {
@@ -68,10 +68,10 @@ export const ABOUT = {
       },
     },
     {
-      title: { en: 'Now learning', ru: 'Сейчас изучаю' },
+      title: { en: 'Now learning', ru: 'Изучаю' },
       lines: {
-        en: ['**Rust** in production — a Telegram bot already runs on it.', 'Curious about **WebAssembly** and everything cross-platform.'],
-        ru: ['**Rust** в проде — на нём уже работает Telegram-бот.', 'Интересен **WebAssembly** и всё кроссплатформенное.'],
+        en: ['**Rust**.', 'Curious about **WebAssembly** and everything cross-platform.'],
+        ru: ['**Rust**.', 'Интересен **WebAssembly** и всё кроссплатформенное.'],
       },
     },
   ],
@@ -92,41 +92,37 @@ export const STACK = [
       { name: 'Dart', level: 5 },
       { name: 'Go', level: 5 },
       { name: 'Rust', level: 3 },
-      { name: 'Lua', level: 3 },
+      { name: 'Lua', level: 2 },
       { name: 'JavaScript', level: 4 },
-      { name: 'HTML / CSS / Sass', level: 5 },
+      { name: 'HTML / CSS / Sass', level: 4 },
     ],
   },
   {
     group: { en: 'Client', ru: 'Клиент' },
     items: [
       { name: 'Flutter', level: 5 },
-      { name: 'Angular', level: 4 },
-      { name: 'Polymer', level: 3 },
-      { name: 'ReactiveX', level: 4 },
-      { name: 'bpmn-js', level: 4 },
+      { name: 'bpmn-js', level: 3 },
       { name: 'PWA', level: 4 },
     ],
   },
   {
     group: { en: 'Server & data', ru: 'Сервер и данные' },
     items: [
-      { name: 'gRPC / Protobuf', level: 5 },
-      { name: 'GraphQL / Hasura', level: 4 },
-      { name: 'PostgreSQL', level: 4 },
+      { name: 'gRPC / Protobuf', level: 4 },
+      { name: 'GraphQL / Hasura', level: 3 },
       { name: 'RabbitMQ / MQTT', level: 4 },
       { name: 'WebSocket', level: 5 },
-      { name: 'Dgraph', level: 3 },
+      { name: 'Dgraph', level: 2 },
     ],
   },
   {
     group: { en: 'Platform', ru: 'Платформа' },
     items: [
-      { name: 'Docker', level: 5 },
-      { name: 'Kubernetes', level: 4 },
-      { name: 'GitLab CI/CD', level: 5 },
-      { name: 'Knative', level: 3 },
-      { name: 'Active Directory / JWT', level: 4 },
+      { name: 'Docker', level: 4 },
+      { name: 'Kubernetes', level: 3 },
+      { name: 'GitLab CI/CD', level: 4 },
+      { name: 'Knative', level: 2 },
+      { name: 'Active Directory / JWT', level: 3 },
       { name: 'Code generation', level: 5 },
     ],
   },
@@ -240,7 +236,7 @@ export const EXPERIENCE = [
 export const EDUCATION = [
   {
     place: {
-      en: 'Moscow Academy of Economics and Law',
+      en: 'Московская академия экономики и права',
       ru: 'Московская академия экономики и права',
     },
     detail: {
@@ -251,7 +247,7 @@ export const EDUCATION = [
   },
   {
     place: {
-      en: 'Lyceum №1511 at the Moscow Engineering Physics Institute (MEPhI)',
+      en: 'Лицей №1511 при МИФИ',
       ru: 'Лицей №1511 при МИФИ',
     },
     detail: { en: 'Physics and mathematics', ru: 'Физико-математический профиль' },
@@ -568,16 +564,16 @@ export const UI = {
     ru: 'Три места за тринадцать лет. Последнее — десять из них.',
   },
   codeIntro: {
-    en: '136 public repositories, 89 of them written rather than forked. These are the ones worth your time — the rest is searchable below.',
-    ru: '136 публичных репозиториев, 89 из них написаны, а не форкнуты. Вот те, что стоят вашего внимания — остальные можно найти ниже.',
+    en: '136 public repositories, 89 of which are original (not forked). Here are the ones worth checking out — the rest can be found in my GitHub profile.',
+    ru: '136 публичных репозиториев, 89 из них написаны, а не форкнуты. Вот те, что стоят внимания — остальные можно найти в профиле на GitHub.',
   },
   designIntro: {
-    en: 'Before the code there was Maya, two certificates and a lot of type. It never went away.',
-    ru: 'До кода была Maya, два сертификата и много типографики. Никуда не делось.',
+    en: 'Proficient in Maya; hold two Autodesk certifications.',
+    ru: 'Работал в Maya, есть два сертификата международного образца от Autodesk.',
   },
   stackIntro: {
-    en: 'What I reach for, and how often.',
-    ru: 'К чему тянусь и как часто.',
+    en: 'Core technologies/tools I use.',
+    ru: 'С чем я чаще всего работаю.',
   },
 
   allRepos: { en: 'All repositories', ru: 'Все репозитории' },
@@ -599,7 +595,7 @@ export const UI = {
 
   contactLead: {
     en: 'Best reached by email. I read everything.',
-    ru: 'Лучше всего писать на почту. Я читаю всё.',
+    ru: 'Лучше всего использовать почту. Я читаю всё.',
   },
   copyEmail: { en: 'Copy', ru: 'Копировать' },
   copied: { en: 'Copied', ru: 'Скопировано' },
