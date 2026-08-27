@@ -14,7 +14,17 @@ manifest.webmanifest     PWA manifest
 assets/css/style.css     design tokens + every component
 assets/js/data.js        all content, each string an { en, ru } pair
 assets/js/app.js         rendering, i18n, GitHub fetch, canvas, interactions
-assets/img/              portrait, wave divider, favicon
+assets/img/              portrait, favicon, social card
+```
+
+## Regenerating the social card
+
+`assets/img/og.png` is the 1200×630 image shared links unfurl to. It is
+rendered from `assets/img/og.source.html`, which is kept beside it so the
+card stays reproducible:
+
+```bash
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu --window-size=1200,630 --virtual-time-budget=6000 --screenshot=assets/img/og.png --user-data-dir=/tmp/chrome-og "file://$PWD/assets/img/og.source.html"
 ```
 
 ## Editing content

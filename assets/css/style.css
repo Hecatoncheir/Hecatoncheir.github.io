@@ -33,7 +33,7 @@
   --bg-3: #e9e9e6;
   --ink: #0a0a0c;
   --ink-2: #3d3d44;
-  --ink-3: #75757e;
+  --ink-3: #6f6f78;
   --line: #d6d6d1;
   --line-2: #bebeb8;
   --card: #ffffff;
@@ -66,7 +66,7 @@
     --bg-3: #14161d;
     --ink: #f2f3f7;
     --ink-2: #a9adbb;
-    --ink-3: #6b7080;
+    --ink-3: #737888;
     --line: #1e212b;
     --line-2: #2b2f3c;
     --card: #0e1015;
@@ -85,7 +85,7 @@
   --bg-3: #14161d;
   --ink: #f2f3f7;
   --ink-2: #a9adbb;
-  --ink-3: #6b7080;
+  --ink-3: #737888;
   --line: #1e212b;
   --line-2: #2b2f3c;
   --card: #0e1015;
@@ -450,7 +450,13 @@ section { position: relative; }
 
 .lang-switch { display: flex; gap: 1px; padding: 2px; }
 .lang-switch button {
-  padding: 0.12rem 0.42rem;
+  /* 24x24 is the WCAG 2.2 minimum target; the old 27x21 missed on height */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  min-height: 26px;
+  padding: 0 0.42rem;
   border-radius: 999px;
   font-family: var(--mono);
   font-size: 0.68rem;
