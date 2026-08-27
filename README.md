@@ -11,10 +11,11 @@ in this repository is exactly what the browser gets.
 index.html               structure, meta, JSON-LD, pre-paint theme script
 manifest.webmanifest     PWA manifest
 .nojekyll                stops GitHub Pages running Jekyll over the files
-assets/css/style.css     design tokens + every component
+assets/css/style.css     @font-face block, design tokens + every component
+assets/fonts/            self-hosted woff2, latin / latin-ext / cyrillic
 assets/js/data.js        all content, each string an { en, ru } pair
 assets/js/app.js         rendering, i18n, GitHub fetch, canvas, interactions
-assets/img/              portrait, favicon, social card
+assets/img/              portrait, favicon, social card, Behance covers
 ```
 
 ## Regenerating the social card
@@ -27,6 +28,51 @@ card stays reproducible:
 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu --window-size=1200,630 --virtual-time-budget=6000 --screenshot=assets/img/og.png --user-data-dir=/tmp/chrome-og "file://$PWD/assets/img/og.source.html"
 ```
 
+## Fonts
+
+Self-hosted in `assets/fonts/`, because the Google Fonts stylesheet was
+render-blocking on a third-party host and cost ~950ms of a ~1550ms first paint
+on its own. Nunito and Nunito Sans are variable files covering 400-800; there is
+deliberately no italic cut, so the handful of uppercase micro-labels that ask for
+`font-style: italic` get the browser's synthetic oblique instead of a 65KB pair
+of extra downloads.
+
+Only latin and cyrillic are fetched by the current text. latin-ext ships anyway
+because `unicode-range` keeps an unused subset from ever being downloaded.
+
+To refresh them, pull the same subsets Google serves and keep the file names —
+`assets/css/style.css` refers to them literally:
+
+```bash
+python3 - <<'EOF'
+import re, urllib.request
+UA = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'}
+url = ('https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700'
+       '&family=Nunito:wght@400..900&family=Nunito+Sans:wght@400..800&display=swap')
+css = urllib.request.urlopen(urllib.request.Request(url, headers=UA)).read().decode()
+WANT = {'U+0000-00FF': 'latin', 'U+0100-02BA': 'latin-ext', 'U+0301, U+0400-045F': 'cyrillic'}
+SLUG = {'Nunito': 'nunito', 'Nunito Sans': 'nunito-sans', 'Anonymous Pro': 'anonymous-pro'}
+for b in re.findall(r'@font-face \{(.*?)\}', css, re.S):
+    fam = re.search(r"font-family: '([^']+)'", b).group(1)
+    wt = re.search(r'font-weight: ([\d ]+)', b).group(1).strip()
+    ur = re.search(r'unicode-range: (.*?);', b, re.S).group(1).strip()
+    sub = next((v for k, v in WANT.items() if ur.startswith(k)), None)
+    if not sub: continue
+    name = f"{SLUG[fam]}{'' if ' ' in wt else '-' + wt}-{sub}.woff2"
+    src = re.search(r'url\((https[^)]+)\)', b).group(1)
+    open(f'assets/fonts/{name}', 'wb').write(urllib.request.urlopen(urllib.request.Request(src, headers=UA)).read())
+    print(name)
+EOF
+```
+
+## Regenerating the Behance covers
+
+Covers are WebP, converted from the 800px JPEGs Behance serves:
+
+```bash
+cwebp -q 82 -m 6 -sharp_yuv <cover>.jpg -o assets/img/work/<gallery-id>.webp
+```
+
 ## Editing content
 
 Everything user-visible lives in `assets/js/data.js`. Adding a highlighted
@@ -37,8 +83,8 @@ The GitHub section fetches the live repository list from the public API on load
 and falls back to `FEATURED_REPOS` if the API is rate-limited or unreachable, so
 the page is never empty.
 
-Behance covers are hot-linked from Behance's CDN; that is the only external
-content the page loads apart from Google Fonts.
+Behance covers live in `assets/img/work/` as WebP. The page loads nothing from
+a third-party origin at all.
 
 ## Local preview
 

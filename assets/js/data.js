@@ -429,7 +429,7 @@ export const BEHANCE = [
     appreciations: 32,
     views: 493,
     url: 'https://www.behance.net/gallery/55931725/Raven-fight-club',
-    cover: 'assets/img/work/55931725.jpg',
+    cover: 'assets/img/work/55931725.webp',
     featured: true,
   },
   {
@@ -439,7 +439,7 @@ export const BEHANCE = [
     appreciations: 32,
     views: 312,
     url: 'https://www.behance.net/gallery/58998585/MMA-Raven-club-web-design',
-    cover: 'assets/img/work/58998585.jpg',
+    cover: 'assets/img/work/58998585.webp',
     featured: true,
   },
   {
@@ -449,7 +449,7 @@ export const BEHANCE = [
     appreciations: 16,
     views: 214,
     url: 'https://www.behance.net/gallery/30470779/Pulsar-phone-covers-store',
-    cover: 'assets/img/work/30470779.jpg',
+    cover: 'assets/img/work/30470779.webp',
     featured: true,
   },
   {
@@ -459,7 +459,7 @@ export const BEHANCE = [
     appreciations: 7,
     views: 129,
     url: 'https://www.behance.net/gallery/27811431/HopUp-for-DIRECTUM',
-    cover: 'assets/img/work/27811431.jpg',
+    cover: 'assets/img/work/27811431.webp',
     featured: true,
   },
   {
@@ -469,7 +469,7 @@ export const BEHANCE = [
     appreciations: 2,
     views: 49,
     url: 'https://www.behance.net/gallery/168979999/Generated-wallpapers',
-    cover: 'assets/img/work/168979999.jpg',
+    cover: 'assets/img/work/168979999.webp',
   },
   {
     title: { en: 'Generated images', ru: 'Сгенерированные изображения' },
@@ -478,7 +478,7 @@ export const BEHANCE = [
     appreciations: 3,
     views: 40,
     url: 'https://www.behance.net/gallery/165365329/Ganerated-images',
-    cover: 'assets/img/work/165365329.jpg',
+    cover: 'assets/img/work/165365329.webp',
   },
   {
     title: { en: 'Generated icons', ru: 'Сгенерированные иконки' },
@@ -487,7 +487,7 @@ export const BEHANCE = [
     appreciations: 0,
     views: 35,
     url: 'https://www.behance.net/gallery/165660685/Generated-icons',
-    cover: 'assets/img/work/165660685.jpg',
+    cover: 'assets/img/work/165660685.webp',
   },
   {
     title: { en: 'Generated logo', ru: 'Сгенерированный логотип' },
@@ -496,7 +496,7 @@ export const BEHANCE = [
     appreciations: 0,
     views: 32,
     url: 'https://www.behance.net/gallery/165352517/Generated-logo',
-    cover: 'assets/img/work/165352517.jpg',
+    cover: 'assets/img/work/165352517.webp',
   },
   {
     title: { en: 'SDXL generated images', ru: 'Изображения SDXL' },
@@ -505,7 +505,7 @@ export const BEHANCE = [
     appreciations: 0,
     views: 15,
     url: 'https://www.behance.net/gallery/177595649/SDXL-generated-images',
-    cover: 'assets/img/work/177595649.jpg',
+    cover: 'assets/img/work/177595649.webp',
   },
   {
     title: { en: 'Stable Diffusion generation', ru: 'Генерация Stable Diffusion' },
@@ -514,7 +514,7 @@ export const BEHANCE = [
     appreciations: 0,
     views: 15,
     url: 'https://www.behance.net/gallery/200638945/Stable-Diffusion-Generation',
-    cover: 'assets/img/work/200638945.jpg',
+    cover: 'assets/img/work/200638945.webp',
   },
   {
     title: { en: 'Wallpapers', ru: 'Обои' },
@@ -523,7 +523,7 @@ export const BEHANCE = [
     appreciations: 0,
     views: 22,
     url: 'https://www.behance.net/gallery/253348875/Wallpapers',
-    cover: 'assets/img/work/253348875.jpg',
+    cover: 'assets/img/work/253348875.webp',
   },
   {
     title: { en: 'Wallpapers II', ru: 'Обои II' },
@@ -532,7 +532,7 @@ export const BEHANCE = [
     appreciations: 0,
     views: 66,
     url: 'https://www.behance.net/gallery/254420061/Wallpapers',
-    cover: 'assets/img/work/254420061.jpg',
+    cover: 'assets/img/work/254420061.webp',
   },
 ];
 
